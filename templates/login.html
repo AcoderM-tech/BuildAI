@@ -1,0 +1,448 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirish — BuildAI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --measure: #FF6A3D;
+            --measure-dark: #e9572d;
+            --ink: #0F172A;
+            --ink-dim: #64748B;
+            --border: #E2E8F0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            background:
+                linear-gradient(rgba(10,18,38,0.62), rgba(10,18,38,0.68)),
+                url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2000&q=90");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* ---- CARD ---- */
+        .login-card {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.14);
+            overflow: hidden;
+            box-shadow:
+                0 40px 100px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.18);
+        }
+
+        /* Accent glow top-left */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: -60px; left: -60px;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,106,61,0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Bottom right subtle glow */
+        .login-card::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; right: -40px;
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99,179,237,0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Orange top strip */
+        .card-strip {
+            height: 3px;
+            background: linear-gradient(90deg, #FF6A3D 0%, #ff9a6c 50%, transparent 100%);
+        }
+
+        .card-body {
+            padding: 38px 40px 40px;
+        }
+
+        /* ---- HEADER ---- */
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .logo img {
+            height: 88px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .badge-beta {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255,106,61,0.15);
+            border: 1px solid rgba(255,106,61,0.30);
+            color: #ff9a6c;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .badge-beta::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #FF6A3D;
+            box-shadow: 0 0 6px rgba(255,106,61,0.7);
+        }
+
+        /* ---- TITLE ---- */
+        .card-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .card-sub {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        /* ---- FORM ---- */
+        .form { display: flex; flex-direction: column; gap: 16px; }
+
+        .field { display: flex; flex-direction: column; gap: 7px; }
+
+        .field label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.40);
+        }
+
+        .input-wrap { position: relative; }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px; height: 16px;
+            color: rgba(255,255,255,0.55);
+            pointer-events: none;
+            flex-shrink: 0;
+        }
+
+        .field input {
+            width: 100%;
+            height: 50px;
+            padding: 0 44px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color .2s, background .2s, box-shadow .2s;
+        }
+
+        .field input::placeholder { color: rgba(255,255,255,0.30); }
+
+        .field input:focus {
+            background: rgba(255,255,255,0.11);
+            border-color: rgba(255,106,61,0.60);
+            box-shadow: 0 0 0 3px rgba(255,106,61,0.12);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px; height: 20px;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.45);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: color .15s;
+        }
+        .password-toggle:hover { color: rgba(255,255,255,0.80); }
+        .password-toggle svg { width: 17px; height: 17px; }
+
+        .password-row { display: flex; justify-content: flex-end; margin-top: -4px; }
+
+        .forgot-link {
+            color: rgba(255,255,255,0.35);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color .15s;
+        }
+        .forgot-link:hover { color: #ff9a6c; }
+
+        /* ---- LOGIN BUTTON ---- */
+        .btn-login {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            margin-top: 4px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #FF6A3D 0%, #ff4d1c 100%);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform .15s, box-shadow .15s;
+            box-shadow: 0 8px 24px rgba(255,106,61,0.30);
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 32px rgba(255,106,61,0.40);
+        }
+
+        .btn-login:active { transform: translateY(0); }
+
+        /* ---- DIVIDER ---- */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0 10px;
+            color: rgba(255,255,255,0.20);
+            font-size: 11px;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* ---- GOOGLE BUTTON ---- */
+        .google-btn {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.75);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background .15s, border-color .15s, color .15s, transform .15s;
+        }
+        .google-btn:hover {
+            background: rgba(255,255,255,0.10);
+            border-color: rgba(255,255,255,0.18);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* ---- REGISTER ---- */
+        .register {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.35);
+        }
+        .register a {
+            color: #ff9a6c;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color .15s;
+        }
+        .register a:hover { color: #FF6A3D; }
+
+        /* ---- ERROR ---- */
+        .error-message {
+            padding: 11px 14px;
+            border-radius: 10px;
+            background: rgba(239,68,68,0.10);
+            border: 1px solid rgba(239,68,68,0.25);
+            color: #fca5a5;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 520px) {
+            body { padding: 18px; }
+            .card-body { padding: 28px 24px 32px; }
+            .card-title { font-size: 22px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <div class="card-strip"></div>
+        <div class="card-body">
+
+            <div class="card-header">
+                <a href="/" class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="BuildAI">
+                </a>
+            </div>
+
+            <div class="card-title">Xush kelibsiz</div>
+            <div class="card-sub">Hisobingizga kiring</div>
+
+            {% if form.errors %}
+                <div class="error-message">
+                    Login yoki parol noto'g'ri. Ma'lumotlarni tekshirib qayta urinib ko'ring.
+                </div>
+            {% endif %}
+
+            <form method="post" class="form">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label for="id_username">Login</label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+                        </svg>
+                        <input type="text" name="username" id="id_username"
+                               placeholder="Loginni kiriting"
+                               autocomplete="username" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="id_password">Parol</label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <rect x="3" y="10" width="18" height="11" rx="2"/>
+                            <path d="M7 10V7a5 5 0 0 1 10 0v3"/>
+                        </svg>
+                        <input type="password" name="password" id="id_password"
+                               placeholder="Parolni kiriting"
+                               autocomplete="current-password" required>
+                        <button type="button" class="password-toggle" id="passwordToggle" aria-label="Parolni ko'rsatish">
+                            <svg id="eyeOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
+                                <circle cx="12" cy="12" r="2.5"/>
+                            </svg>
+                            <svg id="eyeClosed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="display:none;">
+                                <path d="M3 3l18 18"/>
+                                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+                                <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-3.1 3.8"/>
+                                <path d="M6.6 6.6C3.8 8.3 2 12 2 12s3.5 7 10 7c1.8 0 3.4-.5 4.7-1.2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="password-row">
+                    <a href="#" class="forgot-link">Parolni unutdingizmi?</a>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                        <path d="M10 17l5-5-5-5"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    Kirish
+                </button>
+            </form>
+
+            <div class="divider">yoki</div>
+
+            <a href="{% url 'google_login' %}" class="google-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" style="flex-shrink:0">
+                    <path style="fill:#4285F4" d="M21.35 12.23c0-.79-.07-1.55-.2-2.27H12v4.3h5.22a4.46 4.46 0 0 1-1.94 2.93v2.44h3.14c1.84-1.69 2.93-4.18 2.93-7.4z"/>
+                    <path style="fill:#34A853" d="M12 21.99c2.63 0 4.84-.87 6.45-2.36l-3.14-2.44c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.3v2.52A9.74 9.74 0 0 0 12 21.99z"/>
+                    <path style="fill:#FBBC05" d="M6.54 14.08A5.86 5.86 0 0 1 6.23 12c0-.72.12-1.42.31-2.08V7.4H3.3A10 10 0 0 0 2 12c0 1.66.4 3.23 1.3 4.6l3.24-2.52z"/>
+                    <path style="fill:#EA4335" d="M12 5.89c1.43 0 2.72.49 3.73 1.45l2.79-2.79C16.83 2.96 14.63 2 12 2a9.74 9.74 0 0 0-8.7 5.4l3.24 2.52C7.31 7.61 9.46 5.89 12 5.89z"/>
+                </svg>
+                Google orqali kirish
+            </a>
+
+            <div class="register">
+                Hisobingiz yo'qmi?
+                <a href="/register/">Ro'yxatdan o'tish</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('id_password');
+        const passwordToggle = document.getElementById('passwordToggle');
+        const eyeOpen = document.getElementById('eyeOpen');
+        const eyeClosed = document.getElementById('eyeClosed');
+
+        passwordToggle.addEventListener('click', function () {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'block';
+            } else {
+                passwordInput.type = 'password';
+                eyeOpen.style.display = 'block';
+                eyeClosed.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

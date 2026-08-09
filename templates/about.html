@@ -1,0 +1,1447 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Haqimizda — BuildAI</title>
+    <meta name="description" content="BuildAI jamoasi, qadriyatlari va qurilish sohasidagi qarashlari haqida.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --page:#ffffff;
+            --page-soft:#f8fafc;
+            --card:#ffffff;
+            --card-alt:#f1f5f9;
+
+            --ink:#0f172a;
+            --ink-dim:#64748b;
+
+            --border:#e2e8f0;
+
+            --measure:#ff6a3d;
+            --measure-dark:#e85b31;
+
+            --good:#16a34a;
+            --good-soft:#f0fdf4;
+
+            --r-md:14px;
+            --r-lg:22px;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+            background:var(--page);
+            color:var(--ink);
+            font-family:'Inter',sans-serif;
+            overflow-x:hidden;
+        }
+
+        a{
+            color:inherit;
+            text-decoration:none;
+        }
+
+        .wrap{
+            width:min(1180px, calc(100% - 56px));
+            margin:0 auto;
+        }
+
+        /* =========================================
+           BACKGROUND
+        ========================================= */
+
+        body::before{
+            content:'';
+            position:fixed;
+            inset:0;
+            z-index:-2;
+            pointer-events:none;
+
+            background:
+                radial-gradient(
+                    ellipse 70% 50% at 10% 5%,
+                    rgba(255,106,61,.045),
+                    transparent 65%
+                ),
+                radial-gradient(
+                    ellipse 60% 50% at 90% 75%,
+                    rgba(22,163,74,.04),
+                    transparent 65%
+                );
+        }
+
+        body::after{
+            content:'';
+            position:fixed;
+            inset:0;
+            z-index:-1;
+            pointer-events:none;
+
+            background-image:
+                linear-gradient(
+                    rgba(15,23,42,.022) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(15,23,42,.022) 1px,
+                    transparent 1px
+                );
+
+            background-size:48px 48px;
+        }
+
+        /* =========================================
+           NAV
+        ========================================= */
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:100;
+
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border-bottom:1px solid var(--border);
+}
+
+.nav-inner{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 28px;
+
+    height:72px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    flex-shrink:0;
+}
+
+.logo img{
+    height:60px;
+    width:auto;
+    object-fit:contain;
+    display:block;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:34px;
+
+    font-size:13px;
+    color:var(--ink-dim);
+}
+
+.nav-links a{
+    transition:color .18s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--ink);
+}
+
+/* AUTH */
+.nav-auth{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    flex-shrink:0;
+}
+
+.nav-login{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+
+    font-size:13px;
+    font-weight:600;
+    padding:11px 16px;
+    border-radius:9px;
+    white-space:nowrap;
+
+    color:var(--ink);
+    background:transparent;
+    border:1px solid var(--border);
+
+    transition:
+        background .15s,
+        border-color .15s,
+        transform .15s;
+}
+
+.nav-login:hover{
+    background:rgba(15,23,42,0.04);
+    border-color:rgba(15,23,42,0.2);
+    transform:translateY(-1px);
+}
+
+.nav-login svg{
+    width:15px;
+    height:15px;
+    flex-shrink:0;
+}
+
+@media(max-width:860px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .nav-inner{
+        padding:0 18px;
+    }
+
+    .nav-login{
+        padding:10px 12px;
+    }
+}
+
+@media(max-width:520px){
+
+    .nav-login span{
+        display:none;
+    }
+
+    .nav-login{
+        width:38px;
+        height:38px;
+        padding:0;
+    }
+}
+
+        /* =========================================
+           ABOUT INTRO
+           Bu landing HERO emas.
+           ========================================= */
+
+        .about-intro{
+            padding:150px 0 90px;
+            border-bottom:1px solid var(--border);
+        }
+
+        .about-intro-grid{
+            display:grid;
+            grid-template-columns:
+                minmax(0, .85fr)
+                minmax(0, 1.15fr);
+
+            gap:90px;
+            align-items:end;
+        }
+
+        .about-kicker{
+            font-family:'IBM Plex Mono',monospace;
+            font-size:11px;
+            letter-spacing:.16em;
+            text-transform:uppercase;
+            color:var(--measure);
+
+            margin-bottom:18px;
+        }
+
+        .about-intro h1{
+            max-width:560px;
+
+            font-family:'Space Grotesk',sans-serif;
+            font-size:clamp(38px,5vw,64px);
+            line-height:1.03;
+            letter-spacing:-.045em;
+            font-weight:700;
+        }
+
+        .about-intro h1 span{
+            color:var(--measure);
+        }
+
+        .intro-copy{
+            max-width:590px;
+        }
+
+        .intro-copy p{
+            font-size:17px;
+            line-height:1.75;
+            color:var(--ink-dim);
+        }
+
+        .intro-line{
+            width:72px;
+            height:3px;
+            background:var(--measure);
+            margin-top:28px;
+        }
+
+        @media(max-width:860px){
+
+            .about-intro{
+                padding:125px 0 70px;
+            }
+
+            .about-intro-grid{
+                grid-template-columns:1fr;
+                gap:30px;
+            }
+        }
+
+        /* =========================================
+           VISUAL STATEMENT
+        ========================================= */
+
+        .visual-section{
+            padding:90px 0;
+            border-bottom:1px solid var(--border);
+        }
+
+        .visual-layout{
+            display:grid;
+            grid-template-columns:1.3fr .7fr;
+            gap:24px;
+        }
+
+        .visual-main{
+            position:relative;
+            min-height:500px;
+            border-radius:24px;
+            overflow:hidden;
+            background:#e2e8f0;
+        }
+
+        .visual-main img{
+            width:100%;
+            height:100%;
+            min-height:500px;
+            display:block;
+            object-fit:cover;
+        }
+
+        .visual-overlay{
+            position:absolute;
+            left:28px;
+            bottom:28px;
+
+            max-width:420px;
+
+            padding:22px 24px;
+
+            background:rgba(255,255,255,.9);
+            backdrop-filter:blur(12px);
+
+            border:1px solid rgba(255,255,255,.75);
+            border-radius:16px;
+        }
+
+        .visual-overlay span{
+            display:block;
+
+            font-family:'IBM Plex Mono',monospace;
+            font-size:10px;
+            text-transform:uppercase;
+            letter-spacing:.13em;
+
+            color:var(--measure);
+
+            margin-bottom:8px;
+        }
+
+        .visual-overlay p{
+            font-family:'Space Grotesk',sans-serif;
+            font-size:21px;
+            line-height:1.3;
+            font-weight:600;
+        }
+
+        .visual-side{
+            display:grid;
+            grid-template-rows:1fr 1fr;
+            gap:24px;
+        }
+
+        .visual-small{
+            overflow:hidden;
+            border-radius:20px;
+            background:var(--page-soft);
+            border:1px solid var(--border);
+        }
+
+        .visual-small img{
+            width:100%;
+            height:100%;
+            min-height:238px;
+            object-fit:cover;
+            display:block;
+        }
+
+        @media(max-width:860px){
+
+            .visual-layout{
+                grid-template-columns:1fr;
+            }
+
+            .visual-side{
+                grid-template-columns:1fr 1fr;
+                grid-template-rows:none;
+            }
+
+            .visual-main,
+            .visual-main img{
+                min-height:390px;
+            }
+        }
+
+        @media(max-width:600px){
+
+            .visual-side{
+                grid-template-columns:1fr;
+            }
+        }
+
+        /* =========================================
+           VALUES
+        ========================================= */
+
+        .values-section{
+            padding:110px 0;
+        }
+
+        .values-head{
+            display:grid;
+            grid-template-columns:.7fr 1.3fr;
+            gap:70px;
+
+            margin-bottom:65px;
+        }
+
+        .mono-label{
+            font-family:'IBM Plex Mono',monospace;
+            font-size:10.5px;
+            text-transform:uppercase;
+            letter-spacing:.15em;
+            color:var(--measure);
+        }
+
+        .values-head h2{
+            font-family:'Space Grotesk',sans-serif;
+            font-size:clamp(30px,4vw,46px);
+            line-height:1.1;
+            letter-spacing:-.035em;
+            margin-top:12px;
+        }
+
+        .values-head p{
+            max-width:620px;
+            color:var(--ink-dim);
+            font-size:15px;
+            line-height:1.75;
+        }
+
+        .values-list{
+            border-top:1px solid var(--border);
+        }
+
+        .value-row{
+            display:grid;
+            grid-template-columns:90px 280px 1fr;
+
+            gap:30px;
+
+            padding:30px 0;
+
+            border-bottom:1px solid var(--border);
+
+            align-items:start;
+
+            transition:
+                padding-left .2s ease,
+                background .2s ease;
+        }
+
+        .value-row:hover{
+            padding-left:14px;
+        }
+
+        .value-number{
+            font-family:'IBM Plex Mono',monospace;
+            font-size:11px;
+            color:var(--measure);
+            padding-top:5px;
+        }
+
+        .value-row h3{
+            font-family:'Space Grotesk',sans-serif;
+            font-size:23px;
+            line-height:1.2;
+        }
+
+        .value-row p{
+            max-width:560px;
+            color:var(--ink-dim);
+            font-size:14px;
+            line-height:1.7;
+        }
+
+        @media(max-width:800px){
+
+            .values-head{
+                grid-template-columns:1fr;
+                gap:25px;
+            }
+
+            .value-row{
+                grid-template-columns:50px 1fr;
+                gap:18px;
+            }
+
+            .value-row p{
+                grid-column:2;
+            }
+        }
+
+        /* =========================================
+           FOUNDERS
+           CARD YO'Q.
+        ========================================= */
+
+        .team-section{
+            padding:110px 0 120px;
+            background:var(--page-soft);
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
+        }
+
+        .team-head{
+            display:flex;
+            align-items:flex-end;
+            justify-content:space-between;
+            gap:40px;
+
+            margin-bottom:70px;
+        }
+
+        .team-head h2{
+            font-family:'Space Grotesk',sans-serif;
+            font-size:clamp(32px,4vw,48px);
+            letter-spacing:-.035em;
+            margin-top:12px;
+        }
+
+        .team-head p{
+            max-width:430px;
+            color:var(--ink-dim);
+            font-size:14px;
+            line-height:1.7;
+        }
+
+        /* Founder 1 */
+
+        .founder{
+            display:grid;
+            grid-template-columns:1.15fr .85fr;
+            gap:80px;
+            align-items:center;
+
+            padding-bottom:105px;
+        }
+
+        .founder + .founder{
+            padding-top:105px;
+            border-top:1px solid var(--border);
+        }
+
+        .founder.reverse{
+            grid-template-columns:.85fr 1.15fr;
+        }
+
+        .founder.reverse .founder-photo{
+            order:2;
+        }
+
+        .founder.reverse .founder-content{
+            order:1;
+        }
+
+        .founder-photo{
+            position:relative;
+        }
+
+        .founder-photo img{
+            width:100%;
+            aspect-ratio:1.18 / 1;
+
+            object-fit:cover;
+            object-position:center;
+
+            display:block;
+
+            border-radius:2px;
+        }
+
+        .founder-photo::after{
+            content:'';
+
+            position:absolute;
+
+            left:18px;
+            bottom:-18px;
+
+            width:100%;
+            height:100%;
+
+            border:1px solid rgba(255,106,61,.35);
+
+            z-index:0;
+        }
+
+        .founder-photo img{
+            position:relative;
+            z-index:1;
+        }
+
+        .founder-content{
+            max-width:480px;
+        }
+
+        .founder-index{
+            font-family:'IBM Plex Mono',monospace;
+            font-size:10px;
+            color:var(--measure);
+            letter-spacing:.14em;
+            margin-bottom:18px;
+        }
+
+        .founder-content h3{
+            font-family:'Space Grotesk',sans-serif;
+            font-size:clamp(29px,3vw,40px);
+            line-height:1.1;
+            letter-spacing:-.035em;
+            margin-bottom:8px;
+        }
+
+        .founder-role{
+            font-family:'IBM Plex Mono',monospace;
+            font-size:10.5px;
+            text-transform:uppercase;
+            letter-spacing:.09em;
+            color:var(--measure);
+
+            margin-bottom:24px;
+        }
+
+        .founder-content p{
+            color:var(--ink-dim);
+            font-size:14.5px;
+            line-height:1.8;
+            margin-bottom:25px;
+        }
+
+        .founder-note{
+            padding-left:17px;
+            border-left:2px solid var(--measure);
+
+            font-family:'Space Grotesk',sans-serif;
+            font-size:15px;
+            line-height:1.55;
+            color:var(--ink);
+        }
+
+        @media(max-width:850px){
+
+            .team-head{
+                display:block;
+            }
+
+            .team-head p{
+                margin-top:20px;
+            }
+
+            .founder,
+            .founder.reverse{
+                grid-template-columns:1fr;
+                gap:50px;
+            }
+
+            .founder.reverse .founder-photo,
+            .founder.reverse .founder-content{
+                order:initial;
+            }
+
+            .founder-photo{
+                max-width:700px;
+            }
+        }
+
+        /* =========================================
+           NUMBERS / SMALL FACTS
+        ========================================= */
+
+        .facts-section{
+            padding:80px 0;
+        }
+
+        .facts{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
+        }
+
+        .fact{
+            padding:30px 25px;
+            border-right:1px solid var(--border);
+        }
+
+        .fact:last-child{
+            border-right:none;
+        }
+
+        .fact-number{
+            font-family:'Space Grotesk',sans-serif;
+            font-size:34px;
+            font-weight:700;
+            color:var(--measure);
+            margin-bottom:6px;
+        }
+
+        .fact-label{
+            font-family:'IBM Plex Mono',monospace;
+            font-size:10px;
+            line-height:1.5;
+            text-transform:uppercase;
+            letter-spacing:.08em;
+            color:var(--ink-dim);
+        }
+
+        @media(max-width:700px){
+
+            .facts{
+                grid-template-columns:1fr 1fr;
+            }
+
+            .fact:nth-child(2){
+                border-right:none;
+            }
+
+            .fact:nth-child(3),
+            .fact:nth-child(4){
+                border-top:1px solid var(--border);
+            }
+        }
+
+        /* =========================================
+           CLOSING
+        ========================================= */
+
+        .about-closing{
+            padding:120px 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,106,61,.055),
+                    rgba(255,255,255,0) 55%
+                );
+        }
+
+        .closing-inner{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:80px;
+            align-items:end;
+        }
+
+        .closing-inner h2{
+            font-family:'Space Grotesk',sans-serif;
+            font-size:clamp(34px,4.5vw,56px);
+            line-height:1.05;
+            letter-spacing:-.045em;
+        }
+
+        .closing-inner h2 span{
+            color:var(--measure);
+        }
+
+        .closing-copy{
+            color:var(--ink-dim);
+            font-size:15px;
+            line-height:1.75;
+        }
+
+        .closing-link{
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+
+            margin-top:26px;
+
+            color:var(--ink);
+            font-size:14px;
+            font-weight:600;
+
+            border-bottom:1px solid var(--ink);
+            padding-bottom:5px;
+        }
+
+        .closing-link svg{
+            transition:transform .2s ease;
+        }
+
+        .closing-link:hover svg{
+            transform:translateX(4px);
+        }
+
+        @media(max-width:800px){
+
+            .closing-inner{
+                grid-template-columns:1fr;
+                gap:30px;
+            }
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer{
+            border-top:1px solid var(--border);
+            padding:40px 0;
+        }
+
+        .footer-row{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:15px;
+        }
+
+        .footer-row p{
+            font-family:'IBM Plex Mono',monospace;
+            font-size:11px;
+            color:var(--ink-dim);
+        }
+
+        /* =========================================
+           REVEAL
+        ========================================= */
+
+        .reveal{
+            opacity:0;
+            transform:translateY(22px);
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+        .reveal.visible{
+            opacity:1;
+            transform:translateY(0);
+        }
+
+        @media(prefers-reduced-motion:reduce){
+
+            html{
+                scroll-behavior:auto;
+            }
+
+            .reveal{
+                opacity:1;
+                transform:none;
+                transition:none;
+            }
+        }
+
+        ::selection{
+            background:var(--measure);
+            color:#fff;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================================
+     NAV
+========================================= -->
+
+<nav>
+    <div class="nav-inner">
+
+        <a href="/" class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="BuildAI">
+        </a>
+
+        <div class="nav-links">
+            <a href="/#muammo">Muammo</a>
+            <a href="/#ishlaydi">Qanday ishlaydi</a>
+            <a href="/#roadmap">Reja</a>
+            <a href="/about" class="active">Haqimizda</a>
+            <a href="/#aloqa">Aloqa</a>
+        </div>
+
+        <div class="nav-auth">
+            <a href="/login" class="nav-login">
+                <svg viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                    <polyline points="10 17 15 12 10 7"/>
+                    <line x1="15" y1="12" x2="3" y2="12"/>
+                </svg>
+                <span>Kirish</span>
+            </a>
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- =========================================
+     INTRO
+========================================= -->
+
+<section class="about-intro">
+
+    <div class="wrap">
+
+        <div class="about-intro-grid">
+
+            <div class="reveal">
+
+                <div class="about-kicker">
+                    BuildAI / About
+                </div>
+
+                <h1>
+                    Biz ekotizim
+                    <span>quryapmiz.</span>
+                </h1>
+
+                <div class="intro-line"></div>
+
+            </div>
+
+
+            <div class="intro-copy reveal">
+
+                <p>
+                    BuildAI — qurilish jarayonini texnologiya orqali
+                    soddalashtirishga qaratilgan mahsulot. Bizning
+                    e’tiborimiz chiroyli va’dalarda emas, qurilishdagi
+                    real jarayonlarni tushunarli, o‘lchanadigan va
+                    boshqariladigan qilishda.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     VISUAL
+========================================= -->
+
+<section class="visual-section">
+
+    <div class="wrap">
+
+        <div class="visual-layout reveal">
+
+            <div class="visual-main">
+
+                <img
+                    src="{% static 'images/about-main.jpg' %}"
+                    alt="BuildAI qurilish loyihasi"
+                    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85';"
+                >
+
+                <div class="visual-overlay">
+
+                    <span>Bizning yondashuv</span>
+
+                    <p>
+                        Murakkab qurilish jarayonlarini
+                        oddiy va tushunarli tizimga aylantirish.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="visual-side">
+
+                <div class="visual-small">
+
+                    <img
+                        src="{% static 'images/about-detail-1.jpg' %}"
+                        alt="Qurilish detali"
+                        onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80';"
+                    >
+
+                </div>
+
+
+                <div class="visual-small">
+
+                    <img
+                        src="{% static 'images/about-detail-2.jpg' %}"
+                        alt="Qurilish jarayoni"
+                        onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80';"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     VALUES
+========================================= -->
+
+<section class="values-section">
+
+    <div class="wrap">
+
+        <div class="values-head">
+
+            <div class="reveal">
+
+                <div class="mono-label">
+                    Qadriyatlarimiz
+                </div>
+
+                <h2>
+                    Mahsulotdan oldin
+                    prinsiplar.
+                </h2>
+
+            </div>
+
+
+            <div class="reveal">
+
+                <p>
+                    BuildAI qanday ko‘rinishda bo‘lishidan ko‘ra,
+                    qanday ishlashi muhim. Shu sababli mahsulot
+                    qarorlarimiz bir nechta oddiy prinsipga tayanadi.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="values-list">
+
+            <div class="value-row reveal">
+
+                <div class="value-number">01</div>
+
+                <h3>Aniqlik</h3>
+
+                <p>
+                    Raqamlar foydalanuvchiga tushunarli bo‘lishi va
+                    ularning ortida aniq hisob mantig‘i turishi kerak.
+                    Biz “taxminan”ni imkon qadar kamaytirishga
+                    harakat qilamiz.
+                </p>
+
+            </div>
+
+
+            <div class="value-row reveal">
+
+                <div class="value-number">02</div>
+
+                <h3>Soddalik</h3>
+
+                <p>
+                    Qurilishning o‘zi yetarlicha murakkab.
+                    Foydalanuvchi tizim bilan ishlash uchun
+                    muhandis bo‘lishi shart emas.
+                </p>
+
+            </div>
+
+
+            <div class="value-row reveal">
+
+                <div class="value-number">03</div>
+
+                <h3>Mahalliylik</h3>
+
+                <p>
+                    Mahsulot O‘zbekiston sharoitini hisobga olishi
+                    kerak: mahalliy materiallar, bozor narxlari,
+                    qurilish amaliyoti va foydalanuvchining real
+                    ehtiyojlari.
+                </p>
+
+            </div>
+
+
+            <div class="value-row reveal">
+
+                <div class="value-number">04</div>
+
+                <h3>Shaffoflik</h3>
+
+                <p>
+                    Hisob-kitob natijasi shunchaki bitta katta son
+                    bo‘lib qolmasligi kerak. Foydalanuvchi natija
+                    qayerdan kelganini tushuna olishi muhim.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FOUNDERS
+========================================= -->
+
+<section class="team-section">
+
+    <div class="wrap">
+
+        <div class="team-head reveal">
+
+            <div>
+
+                <div class="mono-label">
+                    Jamoa
+                </div>
+
+                <h2>
+                    G'oya ortida turgan insonlar
+                </h2>
+
+            </div>
+
+            <p>
+                BuildAI bitta g‘oyadan boshlangan bo‘lsa-da,
+                mahsulotning texnik va vizual yo‘nalishlari
+                turli kompetensiyalar birlashmasi orqali
+                shakllanmoqda.
+            </p>
+
+        </div>
+
+
+        <!-- FOUNDER 01 -->
+
+        <article class="founder reveal">
+
+            <div class="founder-photo">
+
+                <img
+                    src="{% static 'images/founder-avazbek.jpg' %}?v=2"
+                    alt="Avazbek Mexriddinov"
+                    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1100&q=85';"
+                >
+
+            </div>
+
+
+            <div class="founder-content">
+
+                <div class="founder-index">
+                    FOUNDER / 01
+                </div>
+
+                <h3>
+                    Avazbek Mexriddinov
+                </h3>
+
+                <div class="founder-role">
+                    Co-Founder · Lead Architect · Backend · AI Engineer
+                </div>
+
+                <p>
+                    BuildAI’ning backend va texnik arxitekturasi bilan shug‘ullanadi. Qurilish materiallari va xarajatlarini hisoblash tizimini ishlab chiqadi hamda platformaning texnik qismini boshqaradi.
+                </p>
+
+                <div class="founder-note">
+                    “Texnologiya murakkablikni ko‘paytirish uchun emas,
+                    uni foydalanuvchidan olib tashlash uchun kerak.”
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- FOUNDER 02 -->
+
+        <article class="founder reverse reveal">
+
+            <div class="founder-photo">
+
+                <img
+                    src="{% static 'images/founder-2.jpg' %}?v=2"
+                    alt="BuildAI Co-Founder"
+                    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1100&q=85';"
+                >
+
+            </div>
+
+
+            <div class="founder-content">
+
+                <div class="founder-index">
+                    FOUNDER / 02
+                </div>
+
+                <h3>
+                    Sunnatbek Mexriddinov
+                </h3>
+
+                <div class="founder-role">
+                    Co-Founder · Finance · Accounting
+                </div>
+
+                <p>
+                    BuildAI g‘oyasining shakllanishida ishtirok etgan. Loyihaning buxgalteriya, xarajatlar va moliyaviy hisob-kitoblari bilan shug‘ullanadi.
+                </p>
+
+                <div class="founder-note">
+                    “Yaxshi mahsulot foydalanuvchiga qanday ishlashini
+                    tushuntirib o‘tirmaydi — o‘zi tushunarli bo‘ladi.”
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FACTS
+========================================= -->
+
+<section class="facts-section">
+
+    <div class="wrap">
+
+        <div class="facts reveal">
+
+            <div class="fact">
+
+                <div class="fact-number">01</div>
+
+                <div class="fact-label">
+                    Mahalliy bozor
+                </div>
+
+            </div>
+
+
+            <div class="fact">
+
+                <div class="fact-number">AI</div>
+
+                <div class="fact-label">
+                    Hisob-kitob texnologiyasi
+                </div>
+
+            </div>
+
+
+            <div class="fact">
+
+                <div class="fact-number">24/7</div>
+
+                <div class="fact-label">
+                    Raqamli platforma
+                </div>
+
+            </div>
+
+
+            <div class="fact">
+
+                <div class="fact-number">∞</div>
+
+                <div class="fact-label">
+                    Rivojlanish yo‘nalishlari
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CLOSING
+========================================= -->
+
+<section class="about-closing">
+
+    <div class="wrap">
+
+        <div class="closing-inner">
+
+            <div class="reveal">
+
+                <div class="mono-label">
+                    BuildAI
+                </div>
+
+               <h2>
+    Qurilishni
+    <span>hisobdan boshlang.</span>
+</h2>
+
+            </div>
+
+
+            <div class="closing-copy reveal">
+
+                <p>
+    Hisob-kitobni tekshiring, loyihangizni kiriting
+    va qurilish xarajatlarini oldindan ko‘ring.
+</p>
+
+                <a href="/#mahsulot" class="closing-link">
+
+                    Platformani ko‘rish
+
+                    <svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M5 12h14"/>
+                        <path d="M13 6l6 6-6 6"/>
+                    </svg>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <div class="wrap">
+
+        <div class="footer-row">
+
+            <p>
+                © {% now "Y" %} BuildAI. Barcha huquqlar himoyalangan.
+            </p>
+
+            <p>
+                O‘zbekiston · BuildAI
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+    /* Reveal animation */
+
+    const revealItems = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add('visible');
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.12,
+            rootMargin:'0px 0px -40px 0px'
+        }
+    );
+
+
+    revealItems.forEach((item) => {
+
+        observer.observe(item);
+
+    });
+
+</script>
+
+</body>
+</html>

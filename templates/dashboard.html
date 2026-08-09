@@ -1,0 +1,1155 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+Dashboard — BuildAI
+{% endblock %}
+
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+
+{% block nav_dashboard %}
+active
+{% endblock %}
+
+
+{% block extra_style %}
+
+<style>
+
+    /* =========================================================
+       DASHBOARD
+    ========================================================= */
+
+    .dashboard {
+        width: 100%;
+    }
+
+
+    /* =========================================================
+       MVP NOTICE
+    ========================================================= */
+
+    .mvp-notice {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        width: 100%;
+
+        padding: 17px 48px 17px 18px;
+        margin-bottom: 24px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 106, 61, .075),
+                rgba(255, 255, 255, .95)
+            );
+
+        border: 1px solid rgba(255, 106, 61, .22);
+        border-radius: 15px;
+
+        box-shadow:
+            0 5px 18px rgba(15, 23, 42, .025);
+
+        animation: noticeIn .35s ease both;
+    }
+
+    @keyframes noticeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-7px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+
+    .mvp-notice-icon {
+        width: 44px;
+        height: 44px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 12px;
+
+        background: rgba(255, 106, 61, .10);
+        color: var(--measure);
+    }
+
+    .mvp-notice-icon svg {
+        width: 20px;
+        height: 20px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+
+    .mvp-notice-content {
+        min-width: 0;
+    }
+
+    .mvp-notice-title {
+        margin-bottom: 4px;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        color: var(--ink);
+    }
+
+    .mvp-notice-text {
+        max-width: 1050px;
+
+        color: #5f7897;
+
+        font-size: 12.5px;
+        line-height: 1.55;
+    }
+
+
+    .mvp-notice-close {
+        position: absolute;
+
+        top: 14px;
+        right: 14px;
+
+        width: 28px;
+        height: 28px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 0;
+        background: transparent;
+
+        color: #94a3b8;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+        transition:
+            background .15s ease,
+            color .15s ease;
+    }
+
+    .mvp-notice-close:hover {
+        background: rgba(15, 23, 42, .05);
+        color: var(--ink);
+    }
+
+    .mvp-notice-close svg {
+        width: 16px;
+        height: 16px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+    }
+
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .dashboard-hero {
+
+        position: relative;
+
+        min-height: 220px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 30px;
+
+        padding: 36px 38px;
+
+        margin-bottom: 24px;
+
+        overflow: hidden;
+
+        border-radius: 22px;
+
+        background:
+            radial-gradient(
+                circle at 90% 80%,
+                rgba(255, 106, 61, .16),
+                transparent 32%
+            ),
+            linear-gradient(
+                115deg,
+                #101a30 0%,
+                #16233b 58%,
+                #3a2b36 100%
+            );
+
+        box-shadow:
+            0 18px 45px rgba(15, 23, 42, .12);
+    }
+
+
+    .dashboard-hero::before {
+        content: "";
+
+        position: absolute;
+
+        width: 330px;
+        height: 330px;
+
+        right: -100px;
+        bottom: -180px;
+
+        border: 1px solid rgba(255, 255, 255, .10);
+        border-radius: 50%;
+
+        box-shadow:
+            0 0 0 45px rgba(255, 255, 255, .025),
+            0 0 0 90px rgba(255, 255, 255, .018);
+    }
+
+
+    .dashboard-hero-content {
+        position: relative;
+        z-index: 2;
+
+        max-width: 720px;
+    }
+
+
+    .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        margin-bottom: 12px;
+
+        color: var(--measure);
+
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 10px;
+        font-weight: 600;
+
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+
+    .hero-kicker-dot {
+        width: 8px;
+        height: 8px;
+
+        border-radius: 50%;
+
+        background: var(--measure);
+
+        box-shadow:
+            0 0 0 4px rgba(255, 106, 61, .12);
+    }
+
+
+    .dashboard-hero h1 {
+        margin-bottom: 12px;
+
+        color: #ffffff;
+
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 32px;
+        line-height: 1.15;
+        font-weight: 700;
+
+        letter-spacing: -.035em;
+    }
+
+
+    .dashboard-hero p {
+        max-width: 680px;
+
+        color: #b9c7da;
+
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+
+    .hero-action {
+        position: relative;
+        z-index: 2;
+
+        flex-shrink: 0;
+
+        min-width: 160px;
+        height: 48px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+
+        border: 0;
+        border-radius: 10px;
+
+        background: var(--measure);
+        color: #ffffff;
+
+        font-size: 13px;
+        font-weight: 700;
+
+        box-shadow:
+            0 9px 22px rgba(255, 106, 61, .25);
+
+        cursor: default;
+    }
+
+
+    .hero-action svg {
+        width: 17px;
+        height: 17px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+
+    /* =========================================================
+       STATS
+    ========================================================= */
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+
+        margin-bottom: 24px;
+    }
+
+
+    .stat-card {
+        position: relative;
+
+        min-height: 142px;
+
+        padding: 20px;
+
+        background: var(--card);
+
+        border: 1px solid var(--border);
+        border-radius: 17px;
+
+        box-shadow:
+            0 5px 20px rgba(15, 23, 42, .025);
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease;
+    }
+
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 26px rgba(15, 23, 42, .055);
+    }
+
+
+    .stat-icon {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 14px;
+
+        border-radius: 10px;
+
+        background: #f1f5f9;
+        color: #64748b;
+    }
+
+
+    .stat-icon.orange {
+        background: #fff0eb;
+        color: var(--measure);
+    }
+
+
+    .stat-icon.green {
+        background: #ecfdf3;
+        color: #16a34a;
+    }
+
+
+    .stat-icon svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+
+    .stat-number {
+        margin-bottom: 5px;
+
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 29px;
+        line-height: 1;
+        font-weight: 700;
+
+        color: var(--ink);
+    }
+
+
+    .stat-number.orange {
+        color: var(--measure);
+    }
+
+
+    .stat-label {
+        color: #617995;
+
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+
+    /* =========================================================
+       LOWER GRID
+    ========================================================= */
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+
+    .dashboard-card {
+        background: var(--card);
+
+        border: 1px solid var(--border);
+        border-radius: 18px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 5px 20px rgba(15, 23, 42, .025);
+    }
+
+
+    .card-header {
+        min-height: 88px;
+
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
+        padding: 20px 22px;
+
+        border-bottom: 1px solid var(--border);
+    }
+
+
+    .card-header-icon {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 11px;
+
+        background: #fff0eb;
+        color: var(--measure);
+    }
+
+
+    .card-header-icon svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+
+    .card-header h2 {
+        margin-bottom: 4px;
+
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+
+    .card-header p {
+        color: #6c829d;
+
+        font-size: 12px;
+    }
+
+
+    /* =========================================================
+       DRAWING AREA
+    ========================================================= */
+
+    .drawing-area {
+        margin: 22px;
+
+        min-height: 285px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        padding: 30px;
+
+        text-align: center;
+
+        border: 1px dashed #d3ddea;
+        border-radius: 16px;
+
+        background:
+            linear-gradient(
+                180deg,
+                #ffffff,
+                #f8fafc
+            );
+    }
+
+
+    .drawing-icon {
+        width: 58px;
+        height: 58px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 18px;
+
+        border-radius: 16px;
+
+        background: #fff0eb;
+        color: var(--measure);
+    }
+
+
+    .drawing-icon svg {
+        width: 27px;
+        height: 27px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+
+    .drawing-area h3 {
+        margin-bottom: 8px;
+
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+
+    .drawing-area p {
+        max-width: 520px;
+
+        margin-bottom: 20px;
+
+        color: #7186a1;
+
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+
+    .disabled-action {
+        height: 44px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0 20px;
+
+        border: 0;
+        border-radius: 9px;
+
+        background: #ffebe4;
+        color: #e9572d;
+
+        font-size: 13px;
+        font-weight: 700;
+
+        cursor: default;
+    }
+
+
+    /* =========================================================
+       FEATURES
+    ========================================================= */
+
+    .feature-list {
+        padding: 5px 0;
+    }
+
+
+    .feature-item {
+        min-height: 104px;
+
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        padding: 17px 22px;
+
+        border-bottom: 1px solid var(--border);
+    }
+
+
+    .feature-item:last-child {
+        border-bottom: 0;
+    }
+
+
+    .feature-icon {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 11px;
+
+        background: #f6f8fb;
+        color: #607894;
+    }
+
+
+    .feature-icon svg {
+        width: 19px;
+        height: 19px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+
+    .feature-content {
+        min-width: 0;
+        flex: 1;
+    }
+
+
+    .feature-content h3 {
+        margin-bottom: 5px;
+
+        font-size: 13.5px;
+        font-weight: 700;
+
+        color: var(--ink);
+    }
+
+
+    .feature-content p {
+        color: #7186a1;
+
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+
+    .feature-status {
+        flex-shrink: 0;
+
+        padding: 5px 8px;
+
+        border-radius: 6px;
+
+        background: #f1f5f9;
+        color: #64748b;
+
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 8px;
+        font-weight: 600;
+
+        text-transform: uppercase;
+    }
+
+
+    .feature-status.beta {
+        background: #eff6ff;
+        color: #2563eb;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 1100px) {
+
+        .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-hero h1 {
+            font-size: 28px;
+        }
+    }
+
+
+    @media (max-width: 700px) {
+
+        .mvp-notice {
+            align-items: flex-start;
+        }
+
+        .dashboard-hero {
+            min-height: auto;
+
+            flex-direction: column;
+            align-items: flex-start;
+
+            padding: 28px 25px;
+        }
+
+        .dashboard-hero h1 {
+            font-size: 25px;
+        }
+
+        .hero-action {
+            width: 100%;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+
+    @media (max-width: 480px) {
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .mvp-notice {
+            padding: 16px 40px 16px 14px;
+        }
+
+        .mvp-notice-icon {
+            width: 38px;
+            height: 38px;
+        }
+
+        .dashboard-hero {
+            border-radius: 16px;
+        }
+
+        .dashboard-hero h1 {
+            font-size: 23px;
+        }
+
+        .drawing-area {
+            margin: 14px;
+            padding: 24px 15px;
+        }
+
+        .feature-item {
+            padding: 16px;
+        }
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="dashboard">
+
+
+    <!-- =========================================================
+         BOSHIDAGI YAGONA MVP KOMPONENT
+         DIQQAT: bu komponent faqat dashboard.html ichida.
+         base.html ichida MVP notification YO'Q.
+    ========================================================== -->
+
+    <div
+        class="mvp-notice"
+        id="mvpNotice"
+        role="status"
+        aria-label="BuildAI MVP holati"
+    >
+
+        <div class="mvp-notice-icon">
+
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 10v6"/>
+                <path d="M12 7h.01"/>
+            </svg>
+
+        </div>
+
+
+        <div class="mvp-notice-content">
+
+            <div class="mvp-notice-title">
+                BuildAI hozir MVP bosqichida
+            </div>
+
+            <div class="mvp-notice-text">
+                Platformaning dastlabki versiyasi ishlab chiqilmoqda.
+                Hozircha asosiy yo‘nalish — qurilish chizmasini yuklash
+                va uning asosida hisob-kitob modulini tayyorlash.
+                Keyingi bosqichlarda smeta, materiallar katalogi,
+                loyiha boshqaruvi va boshqa imkoniyatlar bosqichma-bosqich qo‘shiladi.
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="mvp-notice-close"
+            id="mvpNoticeClose"
+            aria-label="Bildirishnomani yopish"
+        >
+
+            <svg viewBox="0 0 24 24">
+                <path d="M6 6l12 12"/>
+                <path d="M18 6L6 18"/>
+            </svg>
+
+        </button>
+
+    </div>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+
+    <section class="dashboard-hero">
+
+        <div class="dashboard-hero-content">
+
+            <div class="hero-kicker">
+                <span class="hero-kicker-dot"></span>
+                BuildAI Workspace
+            </div>
+
+            <h1>
+                Qurilish loyihangizni bir joydan boshqaring.
+            </h1>
+
+            <p>
+                Chizmalarni yuklang, hisob-kitoblarni tayyorlang
+                va loyihangiz bo‘yicha ma’lumotlarni bosqichma-bosqich
+                boshqaring.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="hero-action"
+            disabled
+            title="Funksiya tez orada ishga tushadi"
+        >
+
+            <svg viewBox="0 0 24 24">
+                <path d="M12 16V4"/>
+                <path d="M8 8l4-4 4 4"/>
+                <path d="M5 20h14"/>
+            </svg>
+
+            Chizma yuklash
+
+        </button>
+
+    </section>
+
+
+    <!-- =========================================================
+         STATISTICS
+    ========================================================== -->
+
+    <div class="stats-grid">
+
+
+        <!-- JAMI -->
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+
+                <svg viewBox="0 0 24 24">
+                    <rect x="5" y="3" width="14" height="18" rx="2"/>
+                    <path d="M8 8h8"/>
+                    <path d="M8 12h8"/>
+                    <path d="M8 16h5"/>
+                </svg>
+
+            </div>
+
+            <div class="stat-number orange">
+                {{ projects_count|default:"0" }}
+            </div>
+
+            <div class="stat-label">
+                Jami loyihalar
+            </div>
+
+        </div>
+
+
+        <!-- FAOL -->
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="8"/>
+                    <path d="M12 8v5l3 2"/>
+                </svg>
+
+            </div>
+
+            <div class="stat-number">
+                {{ active_count|default:"0" }}
+            </div>
+
+            <div class="stat-label">
+                Faol loyihalar
+            </div>
+
+        </div>
+
+
+        <!-- TUGALLANGAN -->
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="8"/>
+                    <path d="M8.5 12l2.3 2.3 4.8-5"/>
+                </svg>
+
+            </div>
+
+            <div class="stat-number">
+                {{ completed_count|default:"0" }}
+            </div>
+
+            <div class="stat-label">
+                Tugallangan
+            </div>
+
+        </div>
+
+
+        <!-- QORALAMA -->
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 5h12"/>
+                    <path d="M6 19h12"/>
+                    <path d="M8 5c0 4 4 4 4 7s-4 3-4 7"/>
+                    <path d="M16 5c0 4-4 4-4 7s4 3 4 7"/>
+                </svg>
+
+            </div>
+
+            <div class="stat-number">
+                {{ draft_count|default:"0" }}
+            </div>
+
+            <div class="stat-label">
+                Qoralamalar
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         LOWER CONTENT
+    ========================================================== -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- =====================================================
+             CHIZMA VA HISOB-KITOB
+        ====================================================== -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <div class="card-header-icon">
+
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 3h9l4 4v14H6z"/>
+                        <path d="M15 3v5h5"/>
+                        <path d="M9 13h6"/>
+                        <path d="M9 17h4"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h2>
+                        Chizma va hisob-kitob
+                    </h2>
+
+                    <p>
+                        Asosiy MVP funksiyasi
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="drawing-area">
+
+                <div class="drawing-icon">
+
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 3h9l4 4v14H6z"/>
+                        <path d="M15 3v5h5"/>
+                        <path d="M9 13h6"/>
+                        <path d="M9 17h4"/>
+                    </svg>
+
+                </div>
+
+
+                <h3>
+                    Qurilish chizmasini yuklash
+                </h3>
+
+
+                <p>
+                    Hozircha platformaning asosiy funksiyasi —
+                    chizma asosida hisob-kitob qilish moduli
+                    ishlab chiqilmoqda.
+                </p>
+
+
+                <button
+                    type="button"
+                    class="disabled-action"
+                    disabled
+                >
+                    Tez orada ishga tushadi
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block extra_script %}
+
+<script>
+(function () {
+
+    const notice = document.getElementById("mvpNotice");
+    const closeButton = document.getElementById("mvpNoticeClose");
+
+    if (!notice || !closeButton) {
+        return;
+    }
+
+    closeButton.addEventListener("click", function () {
+
+        notice.style.transition =
+            "opacity .2s ease, transform .2s ease, margin .2s ease";
+
+        notice.style.opacity = "0";
+        notice.style.transform = "translateY(-6px)";
+        notice.style.marginBottom = "0";
+
+        setTimeout(function () {
+            notice.remove();
+        }, 220);
+
+    });
+
+})();
+</script>
+
+{% endblock %}
