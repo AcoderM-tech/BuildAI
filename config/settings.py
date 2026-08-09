@@ -1,5 +1,6 @@
 import os
 import dj_database_url
+import urllib.parse
 from pathlib import Path
 from decouple import config
 
@@ -57,9 +58,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+raw_db_url = config('DATABASE_URL', default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
+
+if raw_db_url.startswith("postgresql://") or raw_db_url.startswith("postgres://"):
+    try:
+        base_url, _, query_params = raw_db_url.partition("?")
+        scheme, _, rest = base_url.partition("://")
+        auth_part, _, host_part = rest.rpartition("@")
+        if auth_part:
+            username, _, password = auth_part.partition(":")
+            if password:
+                encoded_password = urllib.parse.quote_plus(password)
+                reconstructed_url = f"{scheme}://{username}:{encoded_password}@{host_part}"
+                if query_params:
+                    reconstructed_url = f"{reconstructed_url}?{query_params}"
+                raw_db_url = reconstructed_url
+    except Exception:
+        pass
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL', default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+        default=raw_db_url,
         conn_max_age=600,
     )
 }
