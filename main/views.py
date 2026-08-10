@@ -81,3 +81,93 @@ def dashboard_view(request):
         'draft_count': projects.filter(status='draft').count(),
     }
     return render(request, 'dashboard.html', context)
+@login_required
+def coming_soon(request, module_slug):
+    modules = {
+        "buyurtmalar": {
+            "name": "Buyurtmalar",
+            "icon": "fa-solid fa-clipboard-list",
+            "description": (
+                "Qurilish buyurtmalarini yaratish, boshqarish va "
+                "loyiha jarayonlarini bir joydan nazorat qilish imkoniyati."
+            ),
+        },
+
+        "chizmalar-cad": {
+            "name": "Chizmalar va CAD",
+            "icon": "fa-solid fa-drafting-compass",
+            "description": (
+                "Qurilish chizmalarini ko‘rish, tahrirlash va "
+                "kelajakda BuildAI ichida CAD vositalari bilan ishlash."
+            ),
+        },
+
+        "materiallar": {
+            "name": "Materiallar Katalogi",
+            "icon": "fa-solid fa-boxes-stacked",
+            "description": (
+                "Mahalliy do‘konlar va yetkazib beruvchilarning "
+                "qurilish materiallari, narxlari va mavjudligini bir joyda ko‘rish."
+            ),
+        },
+
+        "pudratchilar": {
+            "name": "Pudratchilar Bazasi",
+            "icon": "fa-solid fa-users-gear",
+            "description": (
+                "Ishonchli pudratchilarni topish, xizmatlarini ko‘rish "
+                "va kelajakda reyting hamda ishonchlilik ko‘rsatkichlarini baholash."
+            ),
+        },
+
+        "shnq": {
+            "name": "ShNQ Normativlari",
+            "icon": "fa-solid fa-book-open",
+            "description": (
+                "Qurilish standartlari, me’yorlari va normativ hujjatlarini "
+                "loyiha jarayonida tezkor izlash va qo‘llash."
+            ),
+        },
+
+        "tariflar": {
+            "name": "Tariflar va Rejalar",
+            "icon": "fa-solid fa-credit-card",
+            "description": (
+                "BuildAI xizmatlari uchun tariflar, obuna rejalarini "
+                "tanlash va foydalanish imkoniyatlarini boshqarish."
+            ),
+        },
+
+        "sozlamalar": {
+            "name": "Sozlamalar",
+            "icon": "fa-solid fa-sliders",
+            "description": (
+                "Profil, platforma va foydalanuvchi sozlamalarini "
+                "boshqarish imkoniyati."
+            ),
+        },
+    }
+
+    module = modules.get(module_slug)
+
+    if not module:
+        module = {
+            "name": "Ushbu modul",
+            "icon": "fa-solid fa-screwdriver-wrench",
+            "description": (
+                "Ushbu modul BuildAI platformasining keyingi "
+                "rivojlanish bosqichida ishga tushiriladi."
+            ),
+        }
+
+    context = {
+        "module_name": module["name"],
+        "module_icon": module["icon"],
+        "module_description": module["description"],
+    }
+
+    return render(
+        request,
+        "coming_soon.html",
+        context
+    )

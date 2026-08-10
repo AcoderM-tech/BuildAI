@@ -1,0 +1,589 @@
+{% extends "base.html" %}
+
+{% block title %}{{ module_name }} — BuildAI{% endblock %}
+{% block page_title %}{{ module_name }}{% endblock %}
+
+{% block extra_style %}
+<style>
+    /* =========================================================
+       BUILD AI — COMING SOON
+    ========================================================= */
+
+    .coming-page {
+        min-height: calc(100vh - 150px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 20px 60px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* BACKGROUND */
+
+    .coming-page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background:
+            linear-gradient(
+                rgba(248, 250, 252, .82),
+                rgba(248, 250, 252, .92)
+            ),
+            url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1800&q=85");
+
+        background-size: cover;
+        background-position: center;
+        filter: blur(1px);
+
+        transform: scale(1.03);
+        z-index: 0;
+    }
+
+    .coming-page::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(255, 106, 61, .10),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 80% 80%,
+                rgba(15, 23, 42, .08),
+                transparent 35%
+            );
+
+        z-index: 1;
+        pointer-events: none;
+    }
+
+
+    /* CARD */
+
+    .coming-card {
+        position: relative;
+        z-index: 5;
+
+        width: min(760px, 100%);
+
+        padding: 58px 54px;
+
+        background: rgba(255, 255, 255, .91);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        border: 1px solid rgba(255, 255, 255, .8);
+        border-radius: 30px;
+
+        box-shadow:
+            0 30px 80px rgba(15, 23, 42, .14),
+            0 8px 30px rgba(15, 23, 42, .06);
+
+        text-align: center;
+
+        animation: cardAppear .55s ease both;
+    }
+
+    @keyframes cardAppear {
+        from {
+            opacity: 0;
+            transform: translateY(18px) scale(.98);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+
+    /* ICON */
+
+    .coming-icon-wrap {
+        width: 82px;
+        height: 82px;
+
+        margin: 0 auto 25px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 24px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255, 106, 61, .16),
+                rgba(255, 106, 61, .06)
+            );
+
+        border: 1px solid rgba(255, 106, 61, .16);
+
+        box-shadow:
+            0 12px 30px rgba(255, 106, 61, .12);
+
+        color: #FF6A3D;
+
+        font-size: 31px;
+    }
+
+    .coming-icon-wrap i {
+        animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-4px);
+        }
+    }
+
+
+    /* BADGE */
+
+    .coming-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 7px 12px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 106, 61, .08);
+        border: 1px solid rgba(255, 106, 61, .14);
+
+        color: #EA5A32;
+
+        font-size: 11px;
+        font-weight: 700;
+
+        letter-spacing: .08em;
+        text-transform: uppercase;
+
+        margin-bottom: 17px;
+    }
+
+    .coming-badge-dot {
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: #FF6A3D;
+
+        box-shadow:
+            0 0 0 4px rgba(255, 106, 61, .10);
+    }
+
+
+    /* TITLE */
+
+    .coming-title {
+        margin: 0;
+
+        color: #0F172A;
+
+        font-size: clamp(28px, 4vw, 42px);
+        line-height: 1.15;
+
+        font-weight: 750;
+
+        letter-spacing: -.035em;
+    }
+
+    .coming-title span {
+        color: #FF6A3D;
+    }
+
+
+    /* DESCRIPTION */
+
+    .coming-description {
+        max-width: 570px;
+
+        margin: 18px auto 0;
+
+        color: #64748B;
+
+        font-size: 15px;
+        line-height: 1.75;
+    }
+
+
+    /* PROGRESS */
+
+    .coming-progress {
+        max-width: 460px;
+
+        margin: 32px auto 0;
+
+        text-align: left;
+    }
+
+    .coming-progress-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 9px;
+
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .coming-progress-label {
+        color: #475569;
+    }
+
+    .coming-progress-status {
+        color: #FF6A3D;
+    }
+
+    .coming-progress-bar {
+        width: 100%;
+        height: 7px;
+
+        overflow: hidden;
+
+        background: #EEF2F7;
+
+        border-radius: 999px;
+    }
+
+    .coming-progress-fill {
+        width: 32%;
+        height: 100%;
+
+        border-radius: inherit;
+
+        background:
+            linear-gradient(
+                90deg,
+                #FF6A3D,
+                #FF8A65
+            );
+
+        box-shadow:
+            0 0 15px rgba(255, 106, 61, .25);
+    }
+
+
+    /* FEATURES */
+
+    .coming-features {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 12px;
+
+        margin-top: 32px;
+    }
+
+    .coming-feature {
+        padding: 17px 13px;
+
+        border-radius: 15px;
+
+        background: rgba(248, 250, 252, .9);
+
+        border: 1px solid #E8EDF3;
+
+        text-align: center;
+
+        transition:
+            transform .2s ease,
+            border-color .2s ease,
+            box-shadow .2s ease;
+    }
+
+    .coming-feature:hover {
+        transform: translateY(-3px);
+
+        border-color: rgba(255, 106, 61, .22);
+
+        box-shadow:
+            0 10px 25px rgba(15, 23, 42, .06);
+    }
+
+    .coming-feature-icon {
+        width: 36px;
+        height: 36px;
+
+        margin: 0 auto 9px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: #F8FAFC;
+
+        color: #64748B;
+
+        font-size: 14px;
+    }
+
+    .coming-feature strong {
+        display: block;
+
+        color: #172033;
+
+        font-size: 12px;
+
+        margin-bottom: 3px;
+    }
+
+    .coming-feature span {
+        color: #94A3B8;
+
+        font-size: 10px;
+    }
+
+
+    /* BUTTON */
+
+    .coming-actions {
+        display: flex;
+        justify-content: center;
+
+        margin-top: 32px;
+    }
+
+    .coming-back {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+
+        min-height: 46px;
+
+        padding: 0 21px;
+
+        border-radius: 12px;
+
+        background: #0F172A;
+        color: white;
+
+        text-decoration: none;
+
+        font-size: 13px;
+        font-weight: 650;
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease,
+            background .2s ease;
+    }
+
+    .coming-back:hover {
+        color: white;
+
+        background: #1E293B;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 25px rgba(15, 23, 42, .18);
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+        .coming-page {
+            min-height: calc(100vh - 120px);
+
+            padding:
+                20px 12px 40px;
+        }
+
+        .coming-card {
+            padding: 38px 20px;
+
+            border-radius: 24px;
+        }
+
+        .coming-icon-wrap {
+            width: 68px;
+            height: 68px;
+
+            border-radius: 19px;
+
+            font-size: 26px;
+        }
+
+        .coming-title {
+            font-size: 28px;
+        }
+
+        .coming-description {
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .coming-features {
+            grid-template-columns: 1fr;
+
+            gap: 9px;
+        }
+
+        .coming-feature {
+            display: flex;
+            align-items: center;
+            text-align: left;
+
+            gap: 12px;
+
+            padding: 12px;
+        }
+
+        .coming-feature-icon {
+            margin: 0;
+
+            flex-shrink: 0;
+        }
+
+        .coming-feature strong {
+            margin-bottom: 2px;
+        }
+
+        .coming-progress {
+            margin-top: 26px;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="coming-page">
+
+    <div class="coming-card">
+
+        <!-- ICON -->
+        <div class="coming-icon-wrap">
+            <i class="{{ module_icon|default:'fa-solid fa-screwdriver-wrench' }}"></i>
+        </div>
+
+
+        <!-- STATUS -->
+        <div class="coming-badge">
+            <span class="coming-badge-dot"></span>
+            Ishlab chiqilmoqda
+        </div>
+
+
+        <!-- TITLE -->
+        <h1 class="coming-title">
+            {{ module_name|default:"Ushbu modul" }}
+            <span>tez orada</span>
+        </h1>
+
+
+        <!-- DESCRIPTION -->
+        <p class="coming-description">
+            {{ module_description|default:"Ushbu modul hozirda ishlab chiqilmoqda.
+            BuildAI platformasining keyingi bosqichida ushbu imkoniyat to‘liq
+            ishga tushiriladi." }}
+        </p>
+
+
+        <!-- PROGRESS -->
+        <div class="coming-progress">
+
+            <div class="coming-progress-top">
+
+                <span class="coming-progress-label">
+                    Rivojlantirish jarayoni
+                </span>
+
+                <span class="coming-progress-status">
+                    MVP
+                </span>
+
+            </div>
+
+            <div class="coming-progress-bar">
+                <div class="coming-progress-fill"></div>
+            </div>
+
+        </div>
+
+
+        <!-- FEATURES -->
+        <div class="coming-features">
+
+            <div class="coming-feature">
+
+                <div class="coming-feature-icon">
+                    <i class="fa-solid fa-pen-ruler"></i>
+                </div>
+
+                <div>
+                    <strong>Professional modul</strong>
+                    <span>Qurilish uchun</span>
+                </div>
+
+            </div>
+
+
+            <div class="coming-feature">
+
+                <div class="coming-feature-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+
+                <div>
+                    <strong>Tezkor ishlash</strong>
+                    <span>AI asosida</span>
+                </div>
+
+            </div>
+
+
+            <div class="coming-feature">
+
+                <div class="coming-feature-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+                <div>
+                    <strong>Ishonchli tizim</strong>
+                    <span>BuildAI ekotizimi</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTION -->
+        <div class="coming-actions">
+
+            <a href="{% url 'dashboard' %}" class="coming-back">
+                <i class="fa-solid fa-arrow-left"></i>
+                Dashboardga qaytish
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

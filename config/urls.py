@@ -21,6 +21,69 @@ urlpatterns = [
     # Google orqali kirish (django-allauth) — "Google orqali kirish"
     # tugmasi shu ilova orqali ishlaydi.
     path('accounts/', include('allauth.urls')),
+    path(
+        "buyurtmalar/",
+        views.coming_soon,
+        {
+            "module_slug": "buyurtmalar",
+        },
+        name="buyurtmalar",
+    ),
+
+    path(
+        "chizmalar-cad/",
+        views.coming_soon,
+        {
+            "module_slug": "chizmalar-cad",
+        },
+        name="chizmalar_cad",
+    ),
+
+    path(
+        "materiallar/",
+        views.coming_soon,
+        {
+            "module_slug": "materiallar",
+        },
+        name="materiallar",
+    ),
+
+    path(
+        "pudratchilar/",
+        views.coming_soon,
+        {
+            "module_slug": "pudratchilar",
+        },
+        name="pudratchilar",
+    ),
+
+    path(
+        "shnq/",
+        views.coming_soon,
+        {
+            "module_slug": "shnq",
+        },
+        name="shnq",
+    ),
+
+
+     path(
+        "tariflar/",
+        views.coming_soon,
+        {
+            "module_slug": "tariflar",
+        },
+        name="tariflar",
+    ),
+
+    path(
+        "sozlamalar/",
+        views.coming_soon,
+        {
+            "module_slug": "sozlamalar",
+        },
+        name="sozlamalar",
+    ),
 ]
 
 
