@@ -6,3 +6,4 @@ psycopg2-binary==2.9.12
 dj-database-url==3.1.2
 python-decouple==3.8
 requests
+PyJWT==2.9.0
