@@ -147,22 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
 SOCIALACCOUNT_STORE_TOKENS = False
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'ERROR',
-        },
-        'allauth': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-    },
-}
+
+SOCIALACCOUNT_AUTO_SIGNUP = True
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = False
+SOCIALACCOUNT_EMAIL_REQUIRED = False
