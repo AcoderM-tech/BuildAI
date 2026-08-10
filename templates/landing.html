@@ -7,6 +7,7 @@
 <title>BuildAI — Qurilish 5 daqiqada</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
   :root{
     --page:        #FFFFFF;
@@ -1096,6 +1097,108 @@ nav{
   } else {
     tlItems.forEach(item => item.classList.add('visible'));
   }
+})();
+</script>
+
+
+
+<!-- ===================== BUILD AI COPILOT — LANDING CHAT ===================== -->
+<style>
+  .ba-copilot-launcher{
+    position:fixed; right:24px; bottom:24px; z-index:9999;
+    width:58px; height:58px; border:0; border-radius:18px;
+    background:linear-gradient(135deg,#FF6A3D,#E9572D); color:#fff;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    box-shadow:0 16px 36px rgba(255,106,61,.30),0 4px 12px rgba(15,23,42,.12);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .ba-copilot-launcher:hover{transform:translateY(-3px);box-shadow:0 20px 42px rgba(255,106,61,.35),0 6px 16px rgba(15,23,42,.14)}
+  .ba-copilot-launcher svg{width:25px;height:25px}
+  .ba-copilot-window{
+    position:fixed; right:24px; bottom:94px; z-index:9998;
+    width:min(390px,calc(100vw - 28px)); height:min(590px,calc(100vh - 125px));
+    background:rgba(255,255,255,.98); border:1px solid #E2E8F0; border-radius:22px;
+    box-shadow:0 28px 80px rgba(15,23,42,.18); overflow:hidden;
+    display:flex; flex-direction:column; opacity:0; visibility:hidden;
+    transform:translateY(14px) scale(.98); transform-origin:bottom right;
+    transition:opacity .2s ease, transform .2s ease, visibility .2s ease;
+  }
+  .ba-copilot-window.open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+  .ba-copilot-head{padding:16px 17px;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;background:#fff}
+  .ba-copilot-brand{display:flex;align-items:center;gap:10px}
+  .ba-copilot-avatar{width:36px;height:36px;border-radius:11px;background:rgba(255,106,61,.1);color:#FF6A3D;display:flex;align-items:center;justify-content:center}
+  .ba-copilot-brand strong{display:block;font-size:13px;color:#0F172A}
+  .ba-copilot-brand span{display:block;margin-top:2px;font-size:10px;color:#64748B}
+  .ba-copilot-close{border:0;background:transparent;color:#64748B;width:32px;height:32px;border-radius:9px;cursor:pointer}
+  .ba-copilot-close:hover{background:#F8FAFC;color:#0F172A}
+  .ba-copilot-messages{flex:1;overflow:auto;padding:16px;background:#F8FAFC;display:flex;flex-direction:column;gap:10px}
+  .ba-copilot-msg{max-width:86%;padding:10px 12px;border-radius:14px;font-size:12.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+  .ba-copilot-msg.ai{align-self:flex-start;background:#fff;border:1px solid #E2E8F0;color:#334155;border-bottom-left-radius:5px}
+  .ba-copilot-msg.user{align-self:flex-end;background:#FF6A3D;color:#fff;border-bottom-right-radius:5px}
+  .ba-copilot-input{padding:12px;border-top:1px solid #E2E8F0;background:#fff;display:flex;gap:8px}
+  .ba-copilot-input textarea{flex:1;resize:none;min-height:42px;max-height:110px;border:1px solid #E2E8F0;border-radius:12px;padding:11px 12px;outline:0;font:12.5px/1.45 Inter,sans-serif;color:#0F172A}
+  .ba-copilot-input textarea:focus{border-color:#FF6A3D}
+  .ba-copilot-send{width:44px;height:44px;border:0;border-radius:12px;background:#FF6A3D;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .ba-copilot-send:disabled{opacity:.55;cursor:not-allowed}
+  .ba-copilot-note{padding:0 12px 10px;background:#fff;color:#94A3B8;font-size:9.5px;text-align:center}
+</style>
+
+<button class="ba-copilot-launcher" id="baCopilotLauncher" type="button" aria-label="BuildAI Copilotni ochish">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3a7 7 0 0 0-7 7v4a3 3 0 0 0 3 3h1v-5H6"/>
+    <path d="M12 3a7 7 0 0 1 7 7v4a3 3 0 0 1-3 3h-1v-5h3"/>
+    <path d="M9 21h6"/>
+  </svg>
+</button>
+
+<section class="ba-copilot-window" id="baCopilotWindow" aria-label="BuildAI Copilot chat">
+  <header class="ba-copilot-head">
+    <div class="ba-copilot-brand">
+      <div class="ba-copilot-avatar"><i class="fa-solid fa-robot"></i></div>
+      <div><strong>BuildAI Copilot</strong><span>Qurilish bo‘yicha AI yordamchi</span></div>
+    </div>
+    <button class="ba-copilot-close" id="baCopilotClose" type="button" aria-label="Yopish"><i class="fa-solid fa-xmark"></i></button>
+  </header>
+  <div class="ba-copilot-messages" id="baCopilotMessages">
+    <div class="ba-copilot-msg ai">Salom! Men BuildAI Copilotman. Qurilish, smeta, materiallar, rejalashtirish va BuildAI haqida umumiy savollaringizga javob beraman.</div>
+  </div>
+  <form class="ba-copilot-input" id="baCopilotForm">
+    {% csrf_token %}
+    <textarea id="baCopilotInput" maxlength="4000" placeholder="Savolingizni yozing..." aria-label="Savol"></textarea>
+    <button class="ba-copilot-send" id="baCopilotSend" type="submit" aria-label="Yuborish"><i class="fa-solid fa-arrow-up"></i></button>
+  </form>
+  <div class="ba-copilot-note">Landing chat umumiy ma’lumot uchun. Shaxsiy loyiha ma’lumotlari faqat Copilot sahifasida ishlatiladi.</div>
+</section>
+
+<script>
+(function(){
+  const launcher=document.getElementById('baCopilotLauncher');
+  const win=document.getElementById('baCopilotWindow');
+  const close=document.getElementById('baCopilotClose');
+  const form=document.getElementById('baCopilotForm');
+  const input=document.getElementById('baCopilotInput');
+  const messages=document.getElementById('baCopilotMessages');
+  const send=document.getElementById('baCopilotSend');
+  const apiUrl='{% url "copilot_public_chat_api" %}';
+  const csrf=formCsrf();
+
+  function toggle(open){ win.classList.toggle('open',open); if(open) setTimeout(()=>input.focus(),80); }
+  function addMessage(text,type){ const el=document.createElement('div'); el.className='ba-copilot-msg '+type; el.textContent=text; messages.appendChild(el); messages.scrollTop=messages.scrollHeight; return el; }
+  launcher.addEventListener('click',()=>toggle(!win.classList.contains('open')));
+  close.addEventListener('click',()=>toggle(false));
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();form.requestSubmit();}});
+  function formCsrf(){const el=document.querySelector('#baCopilotForm input[name=csrfmiddlewaretoken]');return el?el.value:'';}
+  form.addEventListener('submit',async e=>{
+    e.preventDefault(); const text=input.value.trim(); if(!text||send.disabled)return;
+    addMessage(text,'user'); input.value=''; send.disabled=true;
+    const loading=addMessage('Javob tayyorlanmoqda…','ai');
+    try{
+      const res=await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrf},body:JSON.stringify({message:text})});
+      const data=await res.json();
+      loading.textContent=data.response||data.error||'Hozircha javob olishning iloji bo‘lmadi.';
+    }catch(err){loading.textContent='Aloqa vaqtincha ishlamadi. Iltimos, birozdan keyin qayta urinib ko‘ring.';}
+    finally{send.disabled=false;input.focus();messages.scrollTop=messages.scrollHeight;}
+  });
 })();
 </script>
 

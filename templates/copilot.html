@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}AI Copilot — BuildAI{% endblock %}
+{% block page_title %}AI Copilot{% endblock %}
+{% block nav_ai_copilot %}active{% endblock %}
+
+{% block extra_style %}
+<style>
+  .copilot-page{min-height:calc(100vh - 132px);display:grid;grid-template-columns:280px minmax(0,1fr);gap:22px}
+  .copilot-card{background:#fff;border:1px solid var(--border);border-radius:20px;box-shadow:0 10px 30px rgba(15,23,42,.05)}
+  .copilot-projects{padding:18px;display:flex;flex-direction:column;min-height:620px}
+  .copilot-kicker{font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#FF6A3D}
+  .copilot-side-title{margin-top:7px;font-size:17px;font-weight:700;color:var(--ink)}
+  .copilot-side-sub{margin-top:6px;font-size:11.5px;line-height:1.55;color:var(--ink-dim)}
+  .copilot-project-list{margin-top:18px;display:flex;flex-direction:column;gap:7px;overflow:auto}
+  .copilot-project{padding:11px 12px;border:1px solid #EEF2F7;border-radius:11px;background:#F8FAFC}
+  .copilot-project strong{display:block;font-size:12px;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .copilot-project span{display:block;margin-top:4px;font-size:9.5px;color:#94A3B8}
+  .copilot-private{margin-top:auto;padding:12px;border-radius:12px;background:#F8FAFC;border:1px solid #EEF2F7;font-size:10px;line-height:1.55;color:#64748B}
+  .copilot-private i{color:#16A34A;margin-right:5px}
+  .copilot-main{display:flex;flex-direction:column;min-height:620px;overflow:hidden}
+  .copilot-header{padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .copilot-header-left{display:flex;align-items:center;gap:12px}
+  .copilot-avatar{width:44px;height:44px;border-radius:14px;background:rgba(255,106,61,.1);color:#FF6A3D;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .copilot-title{font-size:18px;font-weight:700;color:var(--ink)}
+  .copilot-desc{margin-top:4px;font-size:11.5px;color:var(--ink-dim)}
+  .copilot-status{font:500 9px/1 'IBM Plex Mono',monospace;color:#16A34A;background:#DCFCE7;border-radius:100px;padding:7px 9px;white-space:nowrap}
+  .copilot-messages{flex:1;min-height:0;overflow:auto;padding:24px;background:linear-gradient(180deg,#F8FAFC 0%,#fff 100%);display:flex;flex-direction:column;gap:12px}
+  .copilot-msg{max-width:min(760px,86%);padding:12px 14px;border-radius:15px;font-size:13px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+  .copilot-msg.ai{align-self:flex-start;background:#fff;border:1px solid #E2E8F0;color:#334155;border-bottom-left-radius:5px}
+  .copilot-msg.user{align-self:flex-end;background:#FF6A3D;color:#fff;border-bottom-right-radius:5px}
+  .copilot-composer{padding:14px;border-top:1px solid var(--border);background:#fff}
+  .copilot-form{display:flex;gap:10px;align-items:flex-end}
+  .copilot-input{flex:1;resize:none;min-height:50px;max-height:150px;border:1px solid var(--border);border-radius:14px;padding:13px 14px;outline:0;color:var(--ink);font:13px/1.5 Inter,sans-serif}
+  .copilot-input:focus{border-color:#FF6A3D;box-shadow:0 0 0 3px rgba(255,106,61,.08)}
+  .copilot-send{width:50px;height:50px;border:0;border-radius:14px;background:#FF6A3D;color:#fff;cursor:pointer;font-size:15px}
+  .copilot-send:disabled{opacity:.55;cursor:not-allowed}
+  .copilot-hint{margin-top:8px;text-align:center;font-size:9.5px;color:#94A3B8}
+  @media(max-width:900px){.copilot-page{grid-template-columns:1fr}.copilot-projects{min-height:auto}.copilot-private{margin-top:18px}.copilot-main{min-height:620px}}
+  @media(max-width:600px){.copilot-header{padding:16px}.copilot-messages{padding:16px}.copilot-msg{max-width:94%}.copilot-status{display:none}}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="copilot-page">
+  <aside class="copilot-card copilot-projects">
+    <span class="copilot-kicker">Private workspace</span>
+    <h2 class="copilot-side-title">Sizning loyihalaringiz</h2>
+    <p class="copilot-side-sub">Copilot savolga kerak bo‘lganda faqat sizga tegishli loyiha, chizma va hisob-kitob ma’lumotlaridan foydalanadi.</p>
+
+    <div class="copilot-project-list">
+      {% for project in projects %}
+        <div class="copilot-project">
+          <strong>{{ project.name }}</strong>
+          <span>{{ project.get_status_display }} · {{ project.drawings.count }} ta chizma</span>
+        </div>
+      {% empty %}
+        <div class="copilot-project">
+          <strong>Hozircha loyiha yo‘q</strong>
+          <span>Yangi loyiha yaratilgach shu yerda ko‘rinadi.</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="copilot-private"><i class="fa-solid fa-lock"></i> Maxfiylik: boshqa foydalanuvchilarning loyiha ma’lumotlari Copilot kontekstiga kiritilmaydi.</div>
+  </aside>
+
+  <section class="copilot-card copilot-main">
+    <header class="copilot-header">
+      <div class="copilot-header-left">
+        <div class="copilot-avatar"><i class="fa-solid fa-robot"></i></div>
+        <div><h1 class="copilot-title">BuildAI Copilot</h1><p class="copilot-desc">Qurilish, loyiha va hisob-kitob bo‘yicha aqlli yordamchi</p></div>
+      </div>
+      <span class="copilot-status">ONLINE</span>
+    </header>
+
+    <div class="copilot-messages" id="copilotMessages">
+      <div class="copilot-msg ai">Salom! Men BuildAI Copilotman. Umumiy qurilish savollariga javob beraman va kerak bo‘lsa, sizning loyihalaringiz bo‘yicha mavjud ma’lumotlarni tahlil qilaman. Masalan: “Menda qaysi loyihalar bor?”, “Qaysi chizma tayyor?” yoki “Hisob-kitobimdagi jami material xarajati qancha?”</div>
+    </div>
+
+    <div class="copilot-composer">
+      <form class="copilot-form" id="copilotForm">
+        {% csrf_token %}
+        <textarea class="copilot-input" id="copilotInput" maxlength="4000" placeholder="Copilotga savol bering..." aria-label="Copilot savoli"></textarea>
+        <button class="copilot-send" id="copilotSend" type="submit" aria-label="Yuborish"><i class="fa-solid fa-arrow-up"></i></button>
+      </form>
+      <div class="copilot-hint">AI javoblari yordamchi xarakterida. Muhandislik qarorlarini real loyiha hujjatlari va mutaxassis bilan tekshiring.</div>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+(function(){
+  const form=document.getElementById('copilotForm');
+  const input=document.getElementById('copilotInput');
+  const send=document.getElementById('copilotSend');
+  const messages=document.getElementById('copilotMessages');
+  const apiUrl='{% url "copilot_chat_api" %}';
+  function addMessage(text,type){const el=document.createElement('div');el.className='copilot-msg '+type;el.textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight;return el;}
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();form.requestSubmit();}});
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();const text=input.value.trim();if(!text||send.disabled)return;
+    addMessage(text,'user');input.value='';send.disabled=true;const loading=addMessage('Tahlil qilinmoqda…','ai');
+    try{
+      const res=await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify({message:text})});
+      const data=await res.json();
+      if(res.status===403){loading.textContent='Sessiya xavfsizlik tekshiruvidan o‘tmadi. Sahifani yangilab qayta urinib ko‘ring.';return;}
+      loading.textContent=data.response||data.error||'Javob olishning iloji bo‘lmadi.';
+    }catch(err){loading.textContent='Aloqa vaqtincha ishlamadi. Iltimos, qayta urinib ko‘ring.';}
+    finally{send.disabled=false;input.focus();messages.scrollTop=messages.scrollHeight;}
+  });
+  function getCookie(name){const value=('; '+document.cookie).split('; '+name+'=');if(value.length===2)return decodeURIComponent(value.pop().split(';').shift());return '';}
+})();
+</script>
+{% endblock %}

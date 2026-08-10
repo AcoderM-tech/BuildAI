@@ -17,6 +17,9 @@ urlpatterns = [
     path('register/', views.register_page, name='register'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('copilot/', views.copilot_page, name='copilot'),
+    path('api/copilot/chat/', views.copilot_chat_api, name='copilot_chat_api'),
+    path('api/copilot/public-chat/', views.copilot_public_chat_api, name='copilot_public_chat_api'),
 
     # Google orqali kirish (django-allauth) — "Google orqali kirish"
     # tugmasi shu ilova orqali ishlaydi.
