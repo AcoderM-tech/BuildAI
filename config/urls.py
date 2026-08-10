@@ -31,6 +31,15 @@ urlpatterns = [
     ),
 
     path(
+        "smeta-hisobotlari/",
+        views.coming_soon,
+        {
+            "module_slug": "smeta-hisobotlari",
+        },
+        name="smeta_hisobotlari",
+    ),
+
+    path(
         "chizmalar-cad/",
         views.coming_soon,
         {

@@ -93,6 +93,15 @@ def coming_soon(request, module_slug):
             ),
         },
 
+        "smeta-hisobotlari": {
+            "name": "Smeta Hisobotlari",
+            "icon": "fa-solid fa-file-invoice-dollar",
+            "description": (
+                "Loyihalar bo‘yicha smeta hisobotlarini yaratish, "
+                "ko‘rish va yuklab olish imkoniyati."
+            ),
+        },
+
         "chizmalar-cad": {
             "name": "Chizmalar va CAD",
             "icon": "fa-solid fa-drafting-compass",
