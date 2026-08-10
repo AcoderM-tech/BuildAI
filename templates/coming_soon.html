@@ -4,238 +4,578 @@
 {% block page_title %}Tez orada{% endblock %}
 
 {% block extra_style %}
+
 <style>
-    /* =========================================================
-       BUILD AI — COMING SOON (SODDA VERSIYA)
-    ========================================================= */
+/* =========================================================
+   BUILD AI — COMING SOON
+   ========================================================= */
+
+.coming-page {
+    position: relative;
+    min-height: calc(100vh - 90px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 30px;
+    isolation: isolate;
+}
+
+/* ---------------------------------------------------------
+   BACKGROUND
+   --------------------------------------------------------- */
+
+.coming-background {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.coming-background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(248, 250, 252, 0.60),
+            rgba(248, 250, 252, 0.78)
+        );
+    z-index: 5;
+}
+
+/* Orange ambient lights */
+
+.coming-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .14;
+}
+
+.coming-glow.one {
+    top: -180px;
+    left: -120px;
+    background: #ff6a3d;
+}
+
+.coming-glow.two {
+    right: -180px;
+    bottom: -220px;
+    background: #ff8a65;
+}
+
+/* ---------------------------------------------------------
+   FAKE DASHBOARD COMPONENTS
+   --------------------------------------------------------- */
+
+.fake-dashboard {
+    position: absolute;
+    inset: 35px;
+    filter: blur(2px);
+    opacity: .55;
+    transform: scale(1.02);
+}
+
+/* top stats */
+
+.fake-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.fake-stat {
+    height: 115px;
+    background: rgba(255,255,255,.75);
+    border: 1px solid rgba(15,23,42,.08);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 15px 40px rgba(15,23,42,.04);
+}
+
+.fake-line {
+    height: 9px;
+    width: 90px;
+    border-radius: 5px;
+    background: #dfe4ea;
+    margin-bottom: 18px;
+}
+
+.fake-number {
+    height: 25px;
+    width: 65px;
+    border-radius: 6px;
+    background: #cfd5dc;
+}
+
+.fake-stat.orange .fake-number {
+    background: rgba(255,106,61,.42);
+}
+
+/* main panels */
+
+.fake-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+}
+
+.fake-panel {
+    background: rgba(255,255,255,.72);
+    border: 1px solid rgba(15,23,42,.08);
+    border-radius: 18px;
+    padding: 22px;
+    min-height: 270px;
+    box-shadow: 0 15px 40px rgba(15,23,42,.04);
+}
+
+.fake-panel-title {
+    width: 150px;
+    height: 12px;
+    border-radius: 6px;
+    background: #d9dee4;
+    margin-bottom: 25px;
+}
+
+/* chart */
+
+.fake-chart {
+    height: 170px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.fake-chart::before {
+    content: "";
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    bottom: 20px;
+    height: 100px;
+    background:
+        linear-gradient(
+            135deg,
+            transparent 0 8%,
+            rgba(255,106,61,.18) 8% 10%,
+            transparent 10% 22%,
+            rgba(255,106,61,.18) 22% 24%,
+            transparent 24% 38%,
+            rgba(255,106,61,.18) 38% 40%,
+            transparent 40% 55%,
+            rgba(255,106,61,.18) 55% 57%,
+            transparent 57%
+        );
+}
+
+/* table */
+
+.fake-table {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.fake-row {
+    display: grid;
+    grid-template-columns: 1.5fr .7fr .7fr;
+    gap: 15px;
+    align-items: center;
+}
+
+.fake-cell {
+    height: 11px;
+    border-radius: 5px;
+    background: #e0e4e8;
+}
+
+.fake-cell.short {
+    width: 65%;
+}
+
+.fake-cell.orange {
+    background: rgba(255,106,61,.25);
+}
+
+/* ---------------------------------------------------------
+   FLOATING UI CARDS
+   --------------------------------------------------------- */
+
+.fake-floating {
+    position: absolute;
+    background: rgba(255,255,255,.78);
+    border: 1px solid rgba(15,23,42,.08);
+    border-radius: 14px;
+    padding: 15px;
+    box-shadow: 0 20px 50px rgba(15,23,42,.08);
+}
+
+.fake-floating.ai {
+    width: 220px;
+    right: 9%;
+    top: 30%;
+}
+
+.fake-floating.material {
+    width: 190px;
+    left: 7%;
+    bottom: 17%;
+}
+
+.float-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 13px;
+}
+
+.float-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,106,61,.12);
+    color: #ff6a3d;
+}
+
+.float-title {
+    width: 85px;
+    height: 9px;
+    background: #d8dde2;
+    border-radius: 5px;
+}
+
+.float-text {
+    height: 8px;
+    width: 90%;
+    background: #e1e5e9;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.float-text.small {
+    width: 70%;
+}
+
+/* ---------------------------------------------------------
+   MAIN CARD
+   --------------------------------------------------------- */
+
+.coming-card {
+    position: relative;
+    z-index: 20;
+    width: min(560px, 100%);
+    text-align: center;
+
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 28px;
+
+    padding: 52px 48px;
+
+    box-shadow:
+        0 30px 80px rgba(15,23,42,.12),
+        0 5px 20px rgba(15,23,42,.05);
+
+    animation: comingAppear .55s ease-out;
+}
+
+/* top accent */
+
+.coming-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 3px;
+    border-radius: 0 0 10px 10px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ff6a3d,
+        transparent
+    );
+}
+
+/* ---------------------------------------------------------
+   ICON
+   --------------------------------------------------------- */
+
+.coming-icon-wrap {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 25px;
+
+    border-radius: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,106,61,.16),
+            rgba(255,106,61,.06)
+        );
+
+    border: 1px solid rgba(255,106,61,.18);
+
+    color: #ff6a3d;
+
+    font-size: 30px;
+
+    box-shadow:
+        0 15px 35px rgba(255,106,61,.12);
+
+    position: relative;
+}
+
+.coming-icon-wrap::after {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    border-radius: 27px;
+    border: 1px solid rgba(255,106,61,.10);
+}
+
+/* ---------------------------------------------------------
+   TITLE
+   --------------------------------------------------------- */
+
+.coming-title {
+    margin: 0 auto;
+
+    max-width: 460px;
+
+    font-family:
+        "Space Grotesk",
+        "Inter",
+        sans-serif;
+
+    font-size: clamp(25px, 3vw, 34px);
+    line-height: 1.15;
+
+    font-weight: 750;
+
+    letter-spacing: -.035em;
+
+    color: var(--ink, #0f172a);
+}
+
+/* ---------------------------------------------------------
+   DESCRIPTION
+   --------------------------------------------------------- */
+
+.coming-description {
+    max-width: 420px;
+
+    margin: 17px auto 28px;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    color: var(--ink-dim, #64748b);
+}
+
+/* ---------------------------------------------------------
+   STATUS
+   --------------------------------------------------------- */
+
+.coming-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 8px 13px;
+
+    margin-bottom: 28px;
+
+    border-radius: 100px;
+
+    background: rgba(255,106,61,.08);
+    border: 1px solid rgba(255,106,61,.13);
+
+    color: #e85d32;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ff6a3d;
+
+    box-shadow:
+        0 0 0 4px rgba(255,106,61,.10);
+
+    animation: statusPulse 1.8s infinite;
+}
+
+/* ---------------------------------------------------------
+   BUTTON
+   --------------------------------------------------------- */
+
+.coming-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 44px;
+
+    padding: 0 20px;
+
+    border-radius: 11px;
+
+    background: #ff6a3d;
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 22px rgba(255,106,61,.22);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.coming-back:hover {
+    color: #fff;
+    transform: translateY(-2px);
+
+    filter: brightness(1.04);
+
+    box-shadow:
+        0 12px 28px rgba(255,106,61,.28);
+}
+
+/* ---------------------------------------------------------
+   ANIMATIONS
+   --------------------------------------------------------- */
+
+@keyframes comingAppear {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes statusPulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0 4px rgba(255,106,61,.10);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 7px rgba(255,106,61,.03);
+    }
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .fake-dashboard {
+        inset: 20px;
+    }
+
+    .fake-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fake-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .fake-floating {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
 
     .coming-page {
-        min-height: calc(100vh - 150px);
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 40px 20px;
-
-        position: relative;
-        overflow: hidden;
+        min-height: calc(100vh - 70px);
+        padding: 25px 16px;
     }
 
-    /* NOZIK GRID FON */
-
-    .coming-page::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-
-        background-image:
-            linear-gradient(rgba(15, 23, 42, .035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(15, 23, 42, .035) 1px, transparent 1px);
-
-        background-size: 42px 42px;
-
-        -webkit-mask-image:
-            radial-gradient(
-                circle at 50% 42%,
-                rgba(0, 0, 0, .9),
-                transparent 70%
-            );
-        mask-image:
-            radial-gradient(
-                circle at 50% 42%,
-                rgba(0, 0, 0, .9),
-                transparent 70%
-            );
-
-        z-index: 0;
+    .fake-dashboard {
+        inset: 12px;
+        opacity: .3;
     }
 
-    /* XIRA SUZUVCHI SHAKLLAR */
-
-    .coming-blob {
-        position: absolute;
-
-        border-radius: 50%;
-
-        filter: blur(60px);
-
-        z-index: 0;
-
-        pointer-events: none;
+    .fake-stats {
+        gap: 10px;
     }
 
-    .coming-blob-1 {
-        width: 320px;
-        height: 320px;
-
-        top: 8%;
-        left: 8%;
-
-        background: rgba(255, 106, 61, .16);
-
-        animation: blobFloat1 12s ease-in-out infinite;
+    .fake-stat {
+        height: 85px;
+        padding: 14px;
     }
 
-    .coming-blob-2 {
-        width: 260px;
-        height: 260px;
-
-        bottom: 6%;
-        right: 10%;
-
-        background: rgba(15, 23, 42, .10);
-
-        animation: blobFloat2 14s ease-in-out infinite;
+    .fake-grid {
+        gap: 10px;
     }
 
-    .coming-blob-3 {
-        width: 200px;
-        height: 200px;
-
-        top: 55%;
-        left: 50%;
-
-        background: rgba(255, 138, 101, .12);
-
-        animation: blobFloat3 16s ease-in-out infinite;
-    }
-
-    @keyframes blobFloat1 {
-        0%, 100% { transform: translate(0, 0) scale(1); }
-        50% { transform: translate(30px, 20px) scale(1.08); }
-    }
-
-    @keyframes blobFloat2 {
-        0%, 100% { transform: translate(0, 0) scale(1); }
-        50% { transform: translate(-25px, -18px) scale(1.06); }
-    }
-
-    @keyframes blobFloat3 {
-        0%, 100% { transform: translate(-50%, 0) scale(1); }
-        50% { transform: translate(-50%, -22px) scale(1.1); }
-    }
-
-    /* NOZIK ZARRACHALAR */
-
-    .coming-dot {
-        position: absolute;
-
-        width: 4px;
-        height: 4px;
-
-        border-radius: 50%;
-
-        background: rgba(255, 106, 61, .35);
-
-        z-index: 0;
-
-        animation: dotPulse 3.5s ease-in-out infinite;
-    }
-
-    .coming-dot:nth-child(2) { top: 22%; left: 20%; animation-delay: .2s; }
-    .coming-dot:nth-child(3) { top: 68%; left: 16%; animation-delay: 1.1s; }
-    .coming-dot:nth-child(4) { top: 30%; right: 18%; animation-delay: 1.8s; }
-    .coming-dot:nth-child(5) { bottom: 20%; right: 24%; animation-delay: .7s; }
-    .coming-dot:nth-child(6) { top: 50%; left: 8%; animation-delay: 2.3s; }
-
-    @keyframes dotPulse {
-        0%, 100% { opacity: .25; transform: scale(1); }
-        50% { opacity: .8; transform: scale(1.6); }
-    }
-
-    @media (max-width: 700px) {
-        .coming-blob-1, .coming-blob-2, .coming-blob-3 {
-            filter: blur(45px);
-        }
+    .fake-panel {
+        min-height: 190px;
+        padding: 15px;
     }
 
     .coming-card {
-        width: min(480px, 100%);
-
-        padding: 48px 36px;
-
-        background: var(--card);
-
-        border: 1px solid var(--border);
-        border-radius: 20px;
-
-        box-shadow:
-            0 5px 20px rgba(15, 23, 42, .04);
-
-        text-align: center;
-
-        position: relative;
-        z-index: 5;
+        padding: 38px 24px;
+        border-radius: 22px;
     }
 
     .coming-icon-wrap {
-        width: 64px;
-        height: 64px;
-
-        margin: 0 auto 22px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 18px;
-
-        background: #fff0eb;
-        color: var(--measure);
-
-        font-size: 24px;
+        width: 66px;
+        height: 66px;
+        font-size: 26px;
     }
 
     .coming-title {
-        margin: 0 0 12px;
-
-        color: var(--ink);
-
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 22px;
-        font-weight: 700;
-
-        letter-spacing: -.02em;
+        font-size: 26px;
     }
 
     .coming-description {
-        margin: 0 0 30px;
-
-        color: #64748B;
-
-        font-size: 13.5px;
-        line-height: 1.65;
-    }
-
-    .coming-back {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 9px;
-
-        min-height: 44px;
-
-        padding: 0 20px;
-
-        border-radius: 10px;
-
-        background: #0F172A;
-        color: white;
-
-        text-decoration: none;
-
         font-size: 13px;
-        font-weight: 650;
-
-        transition: background .2s ease;
     }
-
-    .coming-back:hover {
-        color: white;
-        background: #1E293B;
-    }
+}
 </style>
+
 {% endblock %}
 
 
@@ -243,15 +583,144 @@
 
 <div class="coming-page">
 
-    <div class="coming-blob coming-blob-1"></div>
-    <div class="coming-blob coming-blob-2"></div>
-    <div class="coming-blob coming-blob-3"></div>
+    <!-- BACKGROUND -->
+    <div class="coming-background">
 
-    <span class="coming-dot"></span>
-    <span class="coming-dot"></span>
-    <span class="coming-dot"></span>
-    <span class="coming-dot"></span>
-    <span class="coming-dot"></span>
+        <div class="coming-glow one"></div>
+        <div class="coming-glow two"></div>
+
+
+        <!-- FAKE DASHBOARD -->
+
+        <div class="fake-dashboard">
+
+            <!-- STAT CARDS -->
+
+            <div class="fake-stats">
+
+                <div class="fake-stat orange">
+                    <div class="fake-line"></div>
+                    <div class="fake-number"></div>
+                </div>
+
+                <div class="fake-stat">
+                    <div class="fake-line"></div>
+                    <div class="fake-number"></div>
+                </div>
+
+                <div class="fake-stat">
+                    <div class="fake-line"></div>
+                    <div class="fake-number"></div>
+                </div>
+
+                <div class="fake-stat">
+                    <div class="fake-line"></div>
+                    <div class="fake-number"></div>
+                </div>
+
+            </div>
+
+
+            <!-- PANELS -->
+
+            <div class="fake-grid">
+
+                <!-- CHART -->
+
+                <div class="fake-panel">
+
+                    <div class="fake-panel-title"></div>
+
+                    <div class="fake-chart"></div>
+
+                </div>
+
+
+                <!-- TABLE -->
+
+                <div class="fake-panel">
+
+                    <div class="fake-panel-title"></div>
+
+                    <div class="fake-table">
+
+                        <div class="fake-row">
+                            <div class="fake-cell"></div>
+                            <div class="fake-cell short"></div>
+                            <div class="fake-cell orange"></div>
+                        </div>
+
+                        <div class="fake-row">
+                            <div class="fake-cell"></div>
+                            <div class="fake-cell short"></div>
+                            <div class="fake-cell"></div>
+                        </div>
+
+                        <div class="fake-row">
+                            <div class="fake-cell"></div>
+                            <div class="fake-cell short"></div>
+                            <div class="fake-cell orange"></div>
+                        </div>
+
+                        <div class="fake-row">
+                            <div class="fake-cell"></div>
+                            <div class="fake-cell short"></div>
+                            <div class="fake-cell"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI FLOATING CARD -->
+
+            <div class="fake-floating ai">
+
+                <div class="float-head">
+
+                    <div class="float-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+
+                    <div class="float-title"></div>
+
+                </div>
+
+                <div class="float-text"></div>
+                <div class="float-text"></div>
+                <div class="float-text small"></div>
+
+            </div>
+
+
+            <!-- MATERIAL CARD -->
+
+            <div class="fake-floating material">
+
+                <div class="float-head">
+
+                    <div class="float-icon">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+
+                    <div class="float-title"></div>
+
+                </div>
+
+                <div class="float-text"></div>
+                <div class="float-text small"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CENTER CARD -->
 
     <div class="coming-card">
 
@@ -259,15 +728,32 @@
             <i class="fa-solid fa-screwdriver-wrench"></i>
         </div>
 
+
+        <div class="coming-status">
+
+            <span class="status-dot"></span>
+
+            Ishlab chiqilmoqda
+
+        </div>
+
+
         <h1 class="coming-title">
-            Bu bo‘lim hozircha ishlab chiqish jarayonida
+            Bu bo‘lim tez orada ishga tushadi
         </h1>
 
+
         <p class="coming-description">
-            Tez orada foydalanish uchun tayyor bo‘ladi.
+            BuildAI jamoasi ushbu funksiyani yanada qulay,
+            ishonchli va professional qilish ustida ishlamoqda.
+            Tez orada bu yerda yangi imkoniyatlar paydo bo‘ladi.
         </p>
 
-        <a href="{% url 'dashboard' %}" class="coming-back">
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="coming-back"
+        >
             <i class="fa-solid fa-arrow-left"></i>
             Dashboardga qaytish
         </a>
