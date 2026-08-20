@@ -122,7 +122,7 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'landing_page'
 
-SITE_ID = 1
+SITE_ID = 2
 
 # Session — DB da saqlanadi (restart dan keyin ham yo'qolmaydi)
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
