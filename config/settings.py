@@ -152,3 +152,18 @@ SOCIALACCOUNT_AUTO_SIGNUP = True
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_USERNAME_REQUIRED = False
 SOCIALACCOUNT_EMAIL_REQUIRED = False
+
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'ERROR',
+    },
+}
