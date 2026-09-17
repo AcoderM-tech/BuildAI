@@ -429,18 +429,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 5px 13px;
-            margin-bottom: 6px;
+            padding: 0 13px;
+            margin-bottom: 8px;
             background: none;
             border: none;
-            border-radius: 8px;
             cursor: pointer;
             gap: 6px;
-            transition: background .15s ease;
-        }
-
-        .nav-section-toggle:hover {
-            background: #F1F5F9;
         }
 
         .nav-section-toggle .nav-title-text {
@@ -450,7 +444,6 @@
             font-weight: 600;
             letter-spacing: .10em;
             text-transform: uppercase;
-            transition: color .15s;
         }
 
         .nav-section-toggle:hover .nav-title-text {
@@ -458,34 +451,24 @@
         }
 
         .nav-chevron {
-            width: 18px;
-            height: 18px;
-            border-radius: 5px;
-            background: #F1F5F9;
-            border: 1px solid #E2E8F0;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            transition: background .15s, border-color .15s, transform .22s ease;
+            transition: transform .22s ease;
         }
 
         .nav-chevron svg {
-            width: 11px;
-            height: 11px;
-            stroke: #94A3B8;
+            width: 12px;
+            height: 12px;
+            stroke: #CBD5E1;
             stroke-width: 2.5;
             fill: none;
             transition: stroke .15s;
         }
 
-        .nav-section-toggle:hover .nav-chevron {
-            background: #E2E8F0;
-            border-color: #CBD5E1;
-        }
-
         .nav-section-toggle:hover .nav-chevron svg {
-            stroke: #64748B;
+            stroke: #94A3B8;
         }
 
         .nav-section-toggle[aria-expanded="false"] .nav-chevron {
