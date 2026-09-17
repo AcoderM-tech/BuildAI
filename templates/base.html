@@ -231,6 +231,11 @@
 
         }
 
+        /* Tizim va obuna — oddiy asosiy section, dropdown emas */
+        .nav-section-system {
+            margin-top: 8px;
+        }
+
 
         .nav-title {
 
@@ -426,6 +431,7 @@
 
         .nav-section-toggle {
             width: 100%;
+            min-height: auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -435,8 +441,10 @@
             border: none;
             cursor: pointer;
             gap: 6px;
+            text-align: left;
         }
 
+        /* Dropdown sarlavhalari oddiy section sarlavhalari bilan bir xil */
         .nav-section-toggle .nav-title-text {
             color: #94A3B8;
             font-family: 'IBM Plex Mono', monospace;
@@ -444,6 +452,7 @@
             font-weight: 600;
             letter-spacing: .10em;
             text-transform: uppercase;
+            line-height: 1.2;
         }
 
         .nav-section-toggle:hover .nav-title-text {
@@ -1400,15 +1409,14 @@
 
 
             <!-- =========================
-                 TIZIM
+                 TIZIM VA OBUNA
             ========================== -->
 
-            <div class="nav-section">
-                <button class="nav-section-toggle" data-toggle="tizim" aria-expanded="true">
-                    <span class="nav-title-text">Tizim va obuna</span>
-                    <span class="nav-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
-                </button>
-                <div class="nav-collapsible-body" id="nav-group-tizim">
+            <div class="nav-section nav-section-system">
+
+                <div class="nav-title">
+                    Tizim va obuna
+                </div>
 
 
                 <!-- TARIFLAR -->
@@ -1476,7 +1484,6 @@
 
                 </a>
 
-            </div><!-- /nav-group-tizim -->
             </div><!-- /nav-section tizim -->
 
         </div>
