@@ -241,19 +241,43 @@
 
             padding: 0 13px;
 
-            margin-bottom: 8px;
+            margin-bottom: 9px;
 
-            color: #94A3B8;
+            color: #64748B;
 
             font-family: 'IBM Plex Mono', monospace;
 
-            font-size: 9.5px;
+            font-size: 10px;
 
-            font-weight: 600;
+            font-weight: 700;
 
-            letter-spacing: .10em;
+            letter-spacing: .09em;
 
             text-transform: uppercase;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+        .nav-title::before {
+
+            content: '';
+
+            width: 5px;
+
+            height: 5px;
+
+            flex: 0 0 5px;
+
+            border-radius: 50%;
+
+            background: #FF6A3D;
+
+            box-shadow: 0 0 0 3px rgba(255, 106, 61, .08);
 
         }
 
@@ -280,11 +304,11 @@
 
             gap: 11px;
 
-            color: #475569;
+            color: #334155;
 
             font-size: 13px;
 
-            font-weight: 500;
+            font-weight: 600;
 
             transition:
                 background .18s ease,
@@ -296,16 +320,18 @@
 
         .nav-link:hover {
 
-            background: #F8FAFC;
+            background: #FFF7F3;
 
-            color: var(--ink);
+            color: #E85B32;
+
+            transform: translateX(2px);
 
         }
 
 
         .nav-link.active {
 
-            background: rgba(255, 106, 61, .095);
+            background: rgba(255, 106, 61, .12);
 
             color: var(--measure);
 
@@ -446,17 +472,30 @@
 
         /* Dropdown sarlavhalari oddiy section sarlavhalari bilan bir xil */
         .nav-section-toggle .nav-title-text {
-            color: #94A3B8;
+            color: #64748B;
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 9.5px;
-            font-weight: 600;
-            letter-spacing: .10em;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .09em;
             text-transform: uppercase;
             line-height: 1.2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-section-toggle .nav-title-text::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            flex: 0 0 5px;
+            border-radius: 50%;
+            background: #FF6A3D;
+            box-shadow: 0 0 0 3px rgba(255, 106, 61, .08);
         }
 
         .nav-section-toggle:hover .nav-title-text {
-            color: #64748B;
+            color: #E85B32;
         }
 
         .nav-chevron {
