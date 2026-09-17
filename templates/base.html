@@ -429,12 +429,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 13px;
-            margin-bottom: 8px;
+            padding: 5px 13px;
+            margin-bottom: 6px;
             background: none;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
             gap: 6px;
+            transition: background .15s ease;
+        }
+
+        .nav-section-toggle:hover {
+            background: #F1F5F9;
         }
 
         .nav-section-toggle .nav-title-text {
@@ -444,29 +450,50 @@
             font-weight: 600;
             letter-spacing: .10em;
             text-transform: uppercase;
+            transition: color .15s;
         }
 
-        .nav-section-toggle .nav-chevron {
-            width: 14px;
-            height: 14px;
-            color: #CBD5E1;
+        .nav-section-toggle:hover .nav-title-text {
+            color: #64748B;
+        }
+
+        .nav-chevron {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
-            transition: transform .22s ease;
+            transition: background .15s, border-color .15s, transform .22s ease;
         }
 
-        .nav-section-toggle .nav-chevron svg {
-            width: 14px;
-            height: 14px;
-            stroke: currentColor;
-            stroke-width: 2;
+        .nav-chevron svg {
+            width: 11px;
+            height: 11px;
+            stroke: #94A3B8;
+            stroke-width: 2.5;
             fill: none;
+            transition: stroke .15s;
         }
 
-        .nav-section-toggle:hover .nav-title-text { color: #64748B; }
-        .nav-section-toggle:hover .nav-chevron { color: #94A3B8; }
+        .nav-section-toggle:hover .nav-chevron {
+            background: #E2E8F0;
+            border-color: #CBD5E1;
+        }
+
+        .nav-section-toggle:hover .nav-chevron svg {
+            stroke: #64748B;
+        }
 
         .nav-section-toggle[aria-expanded="false"] .nav-chevron {
             transform: rotate(-90deg);
+        }
+
+        .nav-section-toggle[aria-expanded="true"] .nav-chevron {
+            transform: rotate(0deg);
         }
 
         .nav-collapsible-body {
@@ -1145,7 +1172,7 @@
                 </button>
                 <div class="nav-collapsible-body collapsed" id="nav-group-pto">
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
                     </span>
@@ -1153,7 +1180,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                     </span>
@@ -1161,7 +1188,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg>
                     </span>
@@ -1169,7 +1196,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
                     </span>
@@ -1192,7 +1219,7 @@
                 </button>
                 <div class="nav-collapsible-body collapsed" id="nav-group-tahlil">
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                     </span>
@@ -1200,7 +1227,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-4 3 3 5-6"/></svg>
                     </span>
@@ -1208,7 +1235,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.2 2.7-5 6-5s6 1.8 6 5"/><circle cx="17" cy="9" r="2"/><path d="M16 15c2.8.2 5 1.8 5 5"/></svg>
                     </span>
@@ -1216,7 +1243,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
                     </span>
@@ -1239,7 +1266,7 @@
                 </button>
                 <div class="nav-collapsible-body collapsed" id="nav-group-boshqa">
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
                     </span>
@@ -1247,7 +1274,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </span>
@@ -1255,7 +1282,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
-                <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
+                <a href="#" class="nav-link" style="pointer-events:none;">
                     <span class="nav-icon">
                         <svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
                     </span>
@@ -1394,11 +1421,11 @@
             ========================== -->
 
             <div class="nav-section">
-                <button class="nav-section-toggle" data-toggle="tizim" aria-expanded="false">
+                <button class="nav-section-toggle" data-toggle="tizim" aria-expanded="true">
                     <span class="nav-title-text">Tizim va obuna</span>
                     <span class="nav-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
                 </button>
-                <div class="nav-collapsible-body collapsed" id="nav-group-tizim">
+                <div class="nav-collapsible-body" id="nav-group-tizim">
 
 
                 <!-- TARIFLAR -->
@@ -1628,17 +1655,24 @@
         }
 
         // ── Collapsible nav sections ──
+        // Sections that should be open by default (if no saved state)
+        const defaultOpen = ['tizim'];
+
         document.querySelectorAll('.nav-section-toggle').forEach(function(btn) {
             const key    = btn.dataset.toggle;
             const body   = document.getElementById('nav-group-' + key);
             if (!body) return;
 
-            // Restore saved state (default: collapsed)
-            const saved = localStorage.getItem('nav-' + key);
-            const open  = saved === 'open';
+            // Restore saved state; fall back to defaultOpen list
+            const saved  = localStorage.getItem('nav-' + key);
+            const open   = saved ? saved === 'open' : defaultOpen.includes(key);
+
             if (open) {
                 body.classList.remove('collapsed');
                 btn.setAttribute('aria-expanded', 'true');
+            } else {
+                body.classList.add('collapsed');
+                btn.setAttribute('aria-expanded', 'false');
             }
 
             btn.addEventListener('click', function () {
