@@ -421,6 +421,68 @@
 
 
         /* =====================================================
+           COLLAPSIBLE NAV SECTION
+        ===================================================== */
+
+        .nav-section-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 13px;
+            margin-bottom: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            gap: 6px;
+        }
+
+        .nav-section-toggle .nav-title-text {
+            color: #94A3B8;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: .10em;
+            text-transform: uppercase;
+        }
+
+        .nav-section-toggle .nav-chevron {
+            width: 14px;
+            height: 14px;
+            color: #CBD5E1;
+            flex-shrink: 0;
+            transition: transform .22s ease;
+        }
+
+        .nav-section-toggle .nav-chevron svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .nav-section-toggle:hover .nav-title-text { color: #64748B; }
+        .nav-section-toggle:hover .nav-chevron { color: #94A3B8; }
+
+        .nav-section-toggle[aria-expanded="false"] .nav-chevron {
+            transform: rotate(-90deg);
+        }
+
+        .nav-collapsible-body {
+            overflow: hidden;
+            transition: max-height .28s cubic-bezier(.4,0,.2,1), opacity .22s ease;
+            max-height: 600px;
+            opacity: 1;
+        }
+
+        .nav-collapsible-body.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
+
+        /* =====================================================
            SIDEBAR FOOTER
         ===================================================== */
 
@@ -1077,10 +1139,11 @@
             ========================== -->
 
             <div class="nav-section">
-
-                <div class="nav-title">
-                    ПТО — Ishlab chiqarish
-                </div>
+                <button class="nav-section-toggle" data-toggle="pto" aria-expanded="false">
+                    <span class="nav-title-text">ПТО — Ishlab chiqarish</span>
+                    <span class="nav-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="nav-collapsible-body collapsed" id="nav-group-pto">
 
                 <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
                     <span class="nav-icon">
@@ -1114,6 +1177,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
+                </div>
             </div>
 
 
@@ -1122,10 +1186,11 @@
             ========================== -->
 
             <div class="nav-section">
-
-                <div class="nav-title">
-                    Tahlil
-                </div>
+                <button class="nav-section-toggle" data-toggle="tahlil" aria-expanded="false">
+                    <span class="nav-title-text">Tahlil</span>
+                    <span class="nav-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="nav-collapsible-body collapsed" id="nav-group-tahlil">
 
                 <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
                     <span class="nav-icon">
@@ -1159,6 +1224,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
+                </div>
             </div>
 
 
@@ -1167,10 +1233,11 @@
             ========================== -->
 
             <div class="nav-section">
-
-                <div class="nav-title">
-                    Boshqa xizmatlar
-                </div>
+                <button class="nav-section-toggle" data-toggle="boshqa" aria-expanded="false">
+                    <span class="nav-title-text">Boshqa xizmatlar</span>
+                    <span class="nav-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="nav-collapsible-body collapsed" id="nav-group-boshqa">
 
                 <a href="#" class="nav-link" style="opacity:.65;pointer-events:none;">
                     <span class="nav-icon">
@@ -1196,6 +1263,7 @@
                     <span class="nav-badge" style="background:#F1F5F9;color:#94A3B8;">BRZO</span>
                 </a>
 
+                </div>
             </div>
 
 
@@ -1204,10 +1272,11 @@
             ========================== -->
 
             <div class="nav-section">
-
-                <div class="nav-title">
-                    Resurslar
-                </div>
+                <button class="nav-section-toggle" data-toggle="resurslar" aria-expanded="false">
+                    <span class="nav-title-text">Resurslar</span>
+                    <span class="nav-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="nav-collapsible-body collapsed" id="nav-group-resurslar">
 
 
                 <!-- MATERIALAR -->
@@ -1319,15 +1388,20 @@
             </div>
 
 
+            </div><!-- /nav-group-resurslar -->
+            </div><!-- /nav-section resurslar -->
+
+
             <!-- =========================
                  TIZIM
             ========================== -->
 
             <div class="nav-section">
-
-                <div class="nav-title">
-                    Tizim va obuna
-                </div>
+                <button class="nav-section-toggle" data-toggle="tizim" aria-expanded="false">
+                    <span class="nav-title-text">Tizim va obuna</span>
+                    <span class="nav-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="nav-collapsible-body collapsed" id="nav-group-tizim">
 
 
                 <!-- TARIFLAR -->
@@ -1395,7 +1469,8 @@
 
                 </a>
 
-            </div>
+            </div><!-- /nav-group-tizim -->
+            </div><!-- /nav-section tizim -->
 
         </div>
 
@@ -1554,6 +1629,34 @@
             });
 
         }
+
+        // ── Collapsible nav sections ──
+        document.querySelectorAll('.nav-section-toggle').forEach(function(btn) {
+            const key    = btn.dataset.toggle;
+            const body   = document.getElementById('nav-group-' + key);
+            if (!body) return;
+
+            // Restore saved state (default: collapsed)
+            const saved = localStorage.getItem('nav-' + key);
+            const open  = saved === 'open';
+            if (open) {
+                body.classList.remove('collapsed');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+
+            btn.addEventListener('click', function () {
+                const isOpen = !body.classList.contains('collapsed');
+                if (isOpen) {
+                    body.classList.add('collapsed');
+                    btn.setAttribute('aria-expanded', 'false');
+                    localStorage.setItem('nav-' + key, 'closed');
+                } else {
+                    body.classList.remove('collapsed');
+                    btn.setAttribute('aria-expanded', 'true');
+                    localStorage.setItem('nav-' + key, 'open');
+                }
+            });
+        });
 
     });
 
